@@ -1,0 +1,6 @@
+{
+  "name": "Pemuda Aceh",
+  "description": "Pemuda Aceh: destinasi, kuliner halal, akomodasi ramah Muslim, budaya, dan perencanaan wisata Aceh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
