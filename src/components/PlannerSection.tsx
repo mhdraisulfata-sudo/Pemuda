@@ -220,15 +220,15 @@ export function PlannerSection({
   };
 
   const inputClass =
-    'w-full px-3.5 py-2.5 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] placeholder-[#728c81] text-sm outline-none focus:border-[#24b486] transition-colors';
+    'w-full px-3.5 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-[#0f2438] placeholder-slate-400 text-sm outline-none focus:border-[#f59e0b] focus:bg-white transition-colors';
 
   return (
     <>
       <section
         id="planner"
-        className="bg-[#0b1814] border-y border-[#152822] py-16 no-print"
+        className="bg-slate-50 border-y border-slate-200 py-16 no-print"
       >
-        <div className="w-[min(1360px,94%)] mx-auto">
+        <div className="w-[min(1260px,94%)] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -236,13 +236,13 @@ export function PlannerSection({
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="mb-7"
           >
-            <div className="text-[#3ad19e] font-semibold text-xs tracking-wide">
+            <div className="text-[#d97706] font-semibold text-xs tracking-wide">
               Perencana Perjalanan
             </div>
-            <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#ecf5f1] tracking-[-0.015em] font-semibold">
+            <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#0f2438] tracking-[-0.015em] font-semibold">
               Rancang perjalanan
             </h2>
-            <p className="text-[#97b0a5] m-0 max-w-[540px] text-[15px]">
+            <p className="text-slate-600 m-0 max-w-[540px] text-[15px]">
               Susun aktivitas 1–5 hari dan hitung anggaran awal perjalanan.
             </p>
           </motion.div>
@@ -253,9 +253,9 @@ export function PlannerSection({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow"
+              className="bg-white border border-slate-200 rounded-xl p-6 card-shadow"
             >
-              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
+              <h3 className="mt-0 mb-4 font-display text-[#0f2438] font-semibold text-lg">
                 Penyusun itinerary
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -350,7 +350,7 @@ export function PlannerSection({
                   type="button"
                   whileTap={{ scale: 0.98 }}
                   onClick={handleAddActivity}
-                  className="sm:col-span-2 inline-flex items-center justify-center gap-1.5 border-0 rounded-lg px-4 py-2.5 bg-[#24b486] text-[#041b14] text-xs font-semibold btn-primary-shadow hover:bg-[#2ec493] transition-colors cursor-pointer"
+                  className="sm:col-span-2 inline-flex items-center justify-center gap-1.5 border-0 rounded-full px-4 py-2.5 bg-[#f59e0b] text-white text-xs font-semibold btn-primary-shadow hover:bg-[#d97706] transition-colors cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Tambah ke itinerary</span>
@@ -364,7 +364,7 @@ export function PlannerSection({
                   );
                   return (
                     <div key={d} className="grid gap-1.5">
-                      <b className="text-xs font-semibold text-[#3ad19e]">
+                      <b className="text-xs font-semibold text-[#d97706]">
                         Hari {d}
                       </b>
                       {acts.length > 0 ? (
@@ -378,18 +378,18 @@ export function PlannerSection({
                               initial={{ opacity: 0, x: -6 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ duration: 0.2 }}
-                              className="flex justify-between gap-2.5 items-center bg-[#091411] border border-[#1a2f28] rounded-lg px-3 py-2.5"
+                              className="flex justify-between gap-2.5 items-center bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5"
                             >
-                              <strong className="text-[13px] font-medium text-[#ecf5f1]">
+                              <strong className="text-[13px] font-medium text-[#0f2438]">
                                 {dest?.nama || 'Item dihapus'}
                               </strong>
-                              <span className="flex items-center gap-2.5 text-[13px] tabular-nums text-[#b2c7be]">
+                              <span className="flex items-center gap-2.5 text-[13px] tabular-nums text-slate-600">
                                 {rupiah(dest?.estimasiBiaya || 0)}
                                 <button
                                   type="button"
                                   aria-label="Hapus aktivitas"
                                   onClick={() => handleRemoveActivity(a.id)}
-                                  className="border border-[#1d352d] bg-[#0f1f1a] hover:border-[#52272c] hover:text-[#f28b94] rounded-md w-7 h-7 inline-grid place-items-center text-[#97b0a5] cursor-pointer transition-colors"
+                                  className="border border-slate-200 bg-white hover:border-rose-300 hover:text-rose-600 rounded-md w-7 h-7 inline-grid place-items-center text-slate-500 cursor-pointer transition-colors"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
                                 </button>
@@ -398,7 +398,7 @@ export function PlannerSection({
                           );
                         })
                       ) : (
-                        <div className="text-xs text-[#728c81]">
+                        <div className="text-xs text-slate-400">
                           Belum ada aktivitas.
                         </div>
                       )}
@@ -407,7 +407,7 @@ export function PlannerSection({
                 })}
               </div>
 
-              <div className="flex gap-2 flex-wrap mt-5 pt-4 border-t border-[#182c25]">
+              <div className="flex gap-2 flex-wrap mt-5 pt-4 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => {
@@ -417,14 +417,14 @@ export function PlannerSection({
                     );
                     onToast('Itinerary tersimpan di browser');
                   }}
-                  className="border border-[#244237] rounded-lg px-4 py-2 bg-[#142a23] text-[#d9f0e7] text-xs font-semibold hover:bg-[#1b382f] transition-colors cursor-pointer whitespace-nowrap"
+                  className="border-0 rounded-full px-4 py-2 bg-[#0f2438] text-white text-xs font-semibold hover:bg-[#1a3957] transition-colors cursor-pointer whitespace-nowrap"
                 >
                   Simpan itinerary
                 </button>
                 <button
                   type="button"
                   onClick={handleDownloadJson}
-                  className="inline-flex items-center gap-1.5 border border-[#1d352d] bg-[#091411] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 border border-slate-200 bg-white text-[#0f2438] rounded-full px-4 py-2 text-xs font-semibold hover:bg-slate-50 transition-colors cursor-pointer whitespace-nowrap"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Unduh JSON</span>
@@ -432,7 +432,7 @@ export function PlannerSection({
                 <button
                   type="button"
                   onClick={handleCopySummary}
-                  className="inline-flex items-center gap-1.5 border border-[#1d352d] bg-[#091411] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 border border-slate-200 bg-white text-[#0f2438] rounded-full px-4 py-2 text-xs font-semibold hover:bg-slate-50 transition-colors cursor-pointer whitespace-nowrap"
                 >
                   <Copy className="w-3.5 h-3.5" />
                   <span>Salin ringkasan</span>
@@ -440,7 +440,7 @@ export function PlannerSection({
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="inline-flex items-center gap-1.5 border border-[#1d352d] bg-[#091411] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer whitespace-nowrap"
+                  className="inline-flex items-center gap-1.5 border border-slate-200 bg-white text-[#0f2438] rounded-full px-4 py-2 text-xs font-semibold hover:bg-slate-50 transition-colors cursor-pointer whitespace-nowrap"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span>Cetak rencana</span>
@@ -453,20 +453,20 @@ export function PlannerSection({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.4, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow"
+              className="bg-white border border-slate-200 rounded-xl p-6 card-shadow"
             >
-              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
+              <h3 className="mt-0 mb-4 font-display text-[#0f2438] font-semibold text-lg">
                 Kalkulator anggaran
               </h3>
               <div className="grid gap-1 text-sm">
-                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
-                  <span className="text-[#b2c7be]">
+                <div className="flex justify-between gap-3 items-center border-b border-slate-100 py-3">
+                  <span className="text-slate-600">
                     Biaya destinasi (sesuai aktivitas)
                   </span>
-                  <b className="tabular-nums text-[#ecf5f1]">{rupiah(destCost)}</b>
+                  <b className="tabular-nums text-[#0f2438]">{rupiah(destCost)}</b>
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
-                  <label htmlFor="mealCost" className="text-[#b2c7be]">
+                <div className="flex justify-between gap-3 items-center border-b border-slate-100 py-3">
+                  <label htmlFor="mealCost" className="text-slate-600">
                     Anggaran makan / orang / hari
                   </label>
                   <input
@@ -475,11 +475,11 @@ export function PlannerSection({
                     min={0}
                     value={mealCost}
                     onChange={(e) => setMealCost(Number(e.target.value) || 0)}
-                    className="max-w-[140px] tabular-nums w-full px-3 py-2 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] text-sm outline-none focus:border-[#24b486]"
+                    className="max-w-[140px] tabular-nums w-full px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 text-[#0f2438] text-sm outline-none focus:border-[#f59e0b]"
                   />
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
-                  <label htmlFor="stayCost" className="text-[#b2c7be]">
+                <div className="flex justify-between gap-3 items-center border-b border-slate-100 py-3">
+                  <label htmlFor="stayCost" className="text-slate-600">
                     Akomodasi / kamar / malam
                   </label>
                   <input
@@ -488,28 +488,28 @@ export function PlannerSection({
                     min={0}
                     value={stayCost}
                     onChange={(e) => setStayCost(Number(e.target.value) || 0)}
-                    className="max-w-[140px] tabular-nums w-full px-3 py-2 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] text-sm outline-none focus:border-[#24b486]"
+                    className="max-w-[140px] tabular-nums w-full px-3 py-2 border border-slate-200 rounded-lg bg-slate-50 text-[#0f2438] text-sm outline-none focus:border-[#f59e0b]"
                   />
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
-                  <span className="text-[#b2c7be]">Estimasi makan</span>
-                  <b className="tabular-nums text-[#ecf5f1]">{rupiah(mealTotal)}</b>
+                <div className="flex justify-between gap-3 items-center border-b border-slate-100 py-3">
+                  <span className="text-slate-600">Estimasi makan</span>
+                  <b className="tabular-nums text-[#0f2438]">{rupiah(mealTotal)}</b>
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
-                  <span className="text-[#b2c7be]">
+                <div className="flex justify-between gap-3 items-center border-b border-slate-100 py-3">
+                  <span className="text-slate-600">
                     Estimasi akomodasi (1 kamar)
                   </span>
-                  <b className="tabular-nums text-[#ecf5f1]">{rupiah(stayTotal)}</b>
+                  <b className="tabular-nums text-[#0f2438]">{rupiah(stayTotal)}</b>
                 </div>
                 <div className="flex justify-between gap-3 items-center py-4">
-                  <span className="font-semibold text-[#ecf5f1]">
+                  <span className="font-semibold text-[#0f2438]">
                     Total estimasi
                   </span>
-                  <span className="font-display text-[26px] font-semibold text-[#3ad19e] tabular-nums">
+                  <span className="font-display text-[26px] font-semibold text-[#d97706] tabular-nums">
                     {rupiah(grandTotal)}
                   </span>
                 </div>
-                <p className="text-xs text-[#97b0a5] bg-[#091411] border border-[#1a2f28] px-3.5 py-3 rounded-lg m-0 leading-relaxed">
+                <p className="text-xs text-slate-500 bg-slate-50 border border-slate-200 px-3.5 py-3 rounded-lg m-0 leading-relaxed">
                   Seluruh harga adalah simulasi, bukan penawaran resmi. Biaya
                   transportasi antarkota, tiket aktual, dan pengeluaran pribadi
                   belum termasuk.
@@ -518,12 +518,12 @@ export function PlannerSection({
             </motion.div>
           </div>
 
-          <div className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow mt-5">
+          <div className="bg-white border border-slate-200 rounded-xl p-6 card-shadow mt-5">
             <div className="mb-4">
-              <h3 className="m-0 font-display text-[#ecf5f1] font-semibold text-lg">
+              <h3 className="m-0 font-display text-[#0f2438] font-semibold text-lg">
                 Rekomendasi paket wisata
               </h3>
-              <p className="text-xs text-[#97b0a5] mt-1 mb-0">
+              <p className="text-xs text-slate-500 mt-1 mb-0">
                 Mencocokkan minat, durasi, dan batas anggaran secara otomatis.
               </p>
             </div>
@@ -575,9 +575,9 @@ export function PlannerSection({
                       key={p.id}
                       whileHover={{ y: -3 }}
                       transition={{ duration: 0.2 }}
-                      className="bg-[#091411] border border-[#1d352d] hover:border-[#2c5245] rounded-xl overflow-hidden transition-colors flex flex-col"
+                      className="bg-white border border-slate-200 hover:border-slate-300 rounded-xl overflow-hidden card-shadow transition-colors flex flex-col"
                     >
-                      <div className="aspect-[4/3] photo-gradient relative overflow-hidden">
+                      <div className="aspect-[16/10] photo-gradient relative overflow-hidden">
                         {pkgImg ? (
                           <img
                             src={pkgImg}
@@ -592,37 +592,37 @@ export function PlannerSection({
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-[#7bc9ad]">
-                            <Compass className="w-7 h-7 opacity-80" strokeWidth={1.6} />
+                          <div className="w-full h-full flex items-center justify-center text-[#0f2438]">
+                            <Compass className="w-7 h-7 opacity-75" strokeWidth={1.6} />
                           </div>
                         )}
                       </div>
                       <div className="p-5 flex-1 flex flex-col">
-                        <div className="text-xs text-[#3ad19e] font-medium tabular-nums">
+                        <div className="text-xs text-[#d97706] font-semibold tabular-nums">
                           Paket wisata · {p.durasi} hari
                         </div>
-                        <h3 className="mt-1.5 mb-1.5 text-[17px] font-semibold text-[#ecf5f1]">
+                        <h3 className="mt-1.5 mb-1.5 text-[17px] font-bold text-[#0f2438]">
                           {p.nama}
                         </h3>
-                        <p className="text-[#b2c7be] text-[13px] my-2 flex-1">
+                        <p className="text-slate-600 text-[13px] my-2 flex-1">
                           {p.deskripsi}
                         </p>
-                        <div className="text-[#97b0a5] text-xs mb-4">
+                        <div className="text-slate-500 text-xs mb-4">
                           Minat: {p.minat.join(', ')}
                         </div>
-                        <div className="pt-3.5 border-t border-[#182c25] flex justify-between items-center gap-2">
+                        <div className="pt-3.5 border-t border-slate-100 flex justify-between items-center gap-2">
                           <div className="tabular-nums">
-                            <b className="font-semibold text-[#ecf5f1] text-sm">
+                            <b className="font-bold text-[#0f2438] text-sm">
                               {rupiah(p.estimasiBiaya)}
                             </b>
-                            <span className="text-[11px] text-[#849f93] ml-1.5">
+                            <span className="text-[11px] text-slate-500 ml-1.5">
                               simulasi
                             </span>
                           </div>
                           <button
                             type="button"
                             onClick={() => handleUsePackage(p)}
-                            className="border border-[#244237] rounded-lg px-4 py-2 bg-[#142a23] text-[#d9f0e7] text-xs font-semibold hover:bg-[#1b382f] transition-colors cursor-pointer whitespace-nowrap"
+                            className="border-0 rounded-full px-4 py-1.5 bg-[#f59e0b] text-white text-xs font-semibold hover:bg-[#d97706] transition-colors cursor-pointer whitespace-nowrap"
                           >
                             Gunakan paket
                           </button>
@@ -632,7 +632,7 @@ export function PlannerSection({
                   );
                 })
               ) : (
-                <div className="col-span-full p-8 text-center text-[#97b0a5] bg-[#091411] border border-[#1d352d] rounded-xl">
+                <div className="col-span-full p-8 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-xl">
                   Belum ada paket yang cocok. Coba longgarkan minat, durasi, atau
                   anggaran.
                 </div>

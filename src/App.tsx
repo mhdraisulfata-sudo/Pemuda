@@ -1,4 +1,10 @@
-import { ArrowRight } from 'lucide-react';
+import {
+  BedDouble,
+  CalendarRange,
+  Compass,
+  Search,
+  Utensils,
+} from 'lucide-react';
 import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DashboardSection } from './components/DashboardSection';
@@ -30,7 +36,7 @@ import type {
   TourPackage,
 } from './types/tourism';
 
-const HERO_IMAGE = '/src/assets/images/hero_aceh_panorama_1795663519489.jpg';
+const HERO_IMAGE = '/src/assets/images/aceh_coast_sabang_1795663520301.jpg';
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 type ExplorerTab = FavoritableType | 'favorites';
@@ -314,7 +320,7 @@ export default function App() {
 
   const t = TRANSLATIONS[lang];
   const controlClass =
-    'w-full px-3.5 py-2 border border-[#1d352d] rounded-lg bg-[#0b1814] text-[#ecf5f1] placeholder-[#728c81] text-sm outline-none focus:border-[#24b486] transition-colors';
+    'w-full px-3.5 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-[#0f2438] placeholder-slate-400 text-sm outline-none focus:border-[#f59e0b] focus:bg-white transition-colors';
 
   const explorerTabs: { id: ExplorerTab; label: string; count: number }[] = [
     { id: 'destinations', label: t.navDest, count: db.destinations.length },
@@ -323,24 +329,74 @@ export default function App() {
     { id: 'favorites', label: t.navFav, count: resolvedFavorites.length },
   ];
 
+  const highlightCards = [
+    {
+      title: lang === 'en' ? 'Curated Destinations' : 'Destinasi Pilihan',
+      desc:
+        lang === 'en'
+          ? 'Coast, heritage & Gayo highlands'
+          : 'Bahari, religi, sejarah & Gayo',
+      cta: lang === 'en' ? 'Explore' : 'Lihat Lokasi',
+      Icon: Compass,
+      onClick: () => jumpToExplorerTab('destinations'),
+    },
+    {
+      title: lang === 'en' ? 'Halal Culinary' : 'Kuliner & UMKM',
+      desc:
+        lang === 'en'
+          ? 'Transparent halal verification status'
+          : 'Cita rasa lokal & info halal jelas',
+      cta: lang === 'en' ? 'Browse Food' : 'Cari Kuliner',
+      Icon: Utensils,
+      onClick: () => jumpToExplorerTab('foods'),
+    },
+    {
+      title: lang === 'en' ? 'Muslim-Friendly Stays' : 'Akomodasi Nyaman',
+      desc:
+        lang === 'en'
+          ? 'Qibla & worship facility info'
+          : 'Fasilitas ibadah & penginapan keluarga',
+      cta: lang === 'en' ? 'View Stays' : 'Cek Penginapan',
+      Icon: BedDouble,
+      onClick: () => jumpToExplorerTab('stays'),
+    },
+    {
+      title: lang === 'en' ? 'Trip & Budget Plan' : 'Rencana & Anggaran',
+      desc:
+        lang === 'en'
+          ? '1–5 day itinerary & cost estimator'
+          : 'Susun itinerary 1–5 hari siap cetak',
+      cta: lang === 'en' ? 'Plan Now' : 'Susun Trip',
+      Icon: CalendarRange,
+      onClick: () => {
+        document
+          .getElementById('planner')
+          ?.scrollIntoView({ behavior: 'smooth' });
+      },
+    },
+  ];
+
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen flex flex-col bg-[#07110e] text-[#ecf5f1]">
-        <header className="sticky top-0 z-20 bg-[#07110e]/92 backdrop-blur-md border-b border-[#182c25] no-print">
-          <div className="w-[min(1360px,94%)] mx-auto flex items-center justify-between gap-8 h-16">
+      <div className="min-h-screen flex flex-col bg-white text-[#0f2438]">
+        <section
+          id="home"
+          className="relative min-h-[540px] sm:min-h-[600px] pt-5 pb-28 sm:pt-7 sm:pb-36 flex flex-col justify-between overflow-hidden no-print"
+        >
+          <header className="relative z-20 w-[min(1180px,92%)] mx-auto bg-white rounded-xl shadow-[0_12px_32px_rgba(6,24,44,0.22)] px-5 sm:px-7 h-16 flex items-center justify-between gap-8">
             <a
               href="#home"
-              className="font-display text-xl font-semibold tracking-tight text-[#ecf5f1] no-underline whitespace-nowrap shrink-0"
+              className="font-display text-xl font-bold tracking-tight text-[#0f2438] no-underline whitespace-nowrap shrink-0"
             >
-              Pemuda Aceh
+              Pemuda <span className="text-[#f59e0b]">Aceh</span>
             </a>
 
-            <nav className="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-[#97b0a5]">
+            <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold tracking-wide text-slate-600">
               <button
                 type="button"
                 onClick={() => jumpToExplorerTab('destinations')}
-                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#ecf5f1] transition-colors whitespace-nowrap shrink-0 ${
-                  activeTab === 'destinations' ? 'text-[#ecf5f1]' : ''
+                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#f59e0b] transition-colors whitespace-nowrap shrink-0 ${
+                  activeTab === 'destinations' ? 'text-[#f59e0b]' : ''
                 }`}
               >
                 {t.navDest}
@@ -348,8 +404,8 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => jumpToExplorerTab('foods')}
-                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#ecf5f1] transition-colors whitespace-nowrap shrink-0 ${
-                  activeTab === 'foods' ? 'text-[#ecf5f1]' : ''
+                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#f59e0b] transition-colors whitespace-nowrap shrink-0 ${
+                  activeTab === 'foods' ? 'text-[#f59e0b]' : ''
                 }`}
               >
                 {t.navFood}
@@ -357,8 +413,8 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => jumpToExplorerTab('stays')}
-                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#ecf5f1] transition-colors whitespace-nowrap shrink-0 ${
-                  activeTab === 'stays' ? 'text-[#ecf5f1]' : ''
+                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#f59e0b] transition-colors whitespace-nowrap shrink-0 ${
+                  activeTab === 'stays' ? 'text-[#f59e0b]' : ''
                 }`}
               >
                 {t.navStay}
@@ -366,137 +422,160 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => jumpToExplorerTab('favorites')}
-                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#ecf5f1] transition-colors whitespace-nowrap shrink-0 tabular-nums ${
-                  activeTab === 'favorites' ? 'text-[#ecf5f1]' : ''
+                className={`bg-transparent border-0 p-0 cursor-pointer hover:text-[#f59e0b] transition-colors whitespace-nowrap shrink-0 tabular-nums ${
+                  activeTab === 'favorites' ? 'text-[#f59e0b]' : ''
                 }`}
               >
                 {t.navFav} ({resolvedFavorites.length})
               </button>
               <a
                 href="#dashboard"
-                className="no-underline hover:text-[#ecf5f1] transition-colors whitespace-nowrap shrink-0"
+                className="no-underline text-slate-600 hover:text-[#f59e0b] transition-colors whitespace-nowrap shrink-0"
               >
                 {t.navDash}
               </a>
             </nav>
 
-            <div className="shrink-0">
-              <motion.a
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                type="button"
+                aria-label="Cari destinasi"
+                onClick={() => jumpToExplorerTab('destinations')}
+                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#0f2438] inline-grid place-items-center border-0 cursor-pointer transition-colors"
+              >
+                <Search className="w-4 h-4" />
+              </button>
+              <a
                 href="#planner"
-                className="inline-flex items-center justify-center rounded-lg px-4 py-2 bg-[#24b486] text-[#041b14] font-semibold text-xs no-underline btn-primary-shadow hover:bg-[#2ec493] transition-colors whitespace-nowrap shrink-0"
+                className="hidden sm:inline-flex items-center justify-center rounded-full px-4 py-2 bg-[#f59e0b] hover:bg-[#d97706] text-white font-semibold text-xs no-underline transition-colors whitespace-nowrap shrink-0"
               >
                 {t.explore}
-              </motion.a>
+              </a>
             </div>
+          </header>
+
+          <div className="relative z-10 w-[min(920px,92%)] mx-auto text-center pt-10 sm:pt-12">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: EASE_OUT }}
+            >
+              <div className="text-[#fbbf24] font-semibold text-xs tracking-wide mb-3">
+                {t.heroKicker}
+              </div>
+
+              <h1 className="font-display text-[clamp(2.25rem,4.6vw,3.8rem)] leading-[1.08] tracking-[-0.02em] text-white font-bold m-0 text-balance">
+                {t.heroTitle}
+              </h1>
+
+              <p className="mt-4 mb-0 max-w-[56ch] mx-auto text-white/85 text-[15px] sm:text-base leading-relaxed">
+                {t.heroSubtitle}
+              </p>
+
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
+                <motion.a
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  href="#explorer"
+                  className="inline-flex items-center justify-center rounded-full px-7 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-white font-bold text-sm no-underline btn-primary-shadow transition-colors whitespace-nowrap"
+                >
+                  {t.heroPrimaryCta}
+                </motion.a>
+                <div
+                  role="group"
+                  aria-label="Pilih bahasa"
+                  className="inline-flex items-center gap-1 p-1 bg-white/15 backdrop-blur-xs rounded-full border border-white/20"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setLang('id')}
+                    className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
+                      lang === 'id'
+                        ? 'bg-white text-[#0f2438]'
+                        : 'text-white/85 hover:text-white'
+                    }`}
+                  >
+                    ID
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLang('en')}
+                    className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors cursor-pointer ${
+                      lang === 'en'
+                        ? 'bg-white text-[#0f2438]'
+                        : 'text-white/85 hover:text-white'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           </div>
-        </header>
+
+          <HeroDestinationSlideshow
+            destinations={db.destinations}
+            fallbackImage={HERO_IMAGE}
+            onInspectCurrent={(dest) => {
+              setActiveTab('destinations');
+              handleShowDetail('destinations', dest.id);
+              document
+                .getElementById('explorer')
+                ?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
+        </section>
+
+        <section className="relative z-20 -mt-16 sm:-mt-20 pb-8 no-print">
+          <div className="w-[min(1180px,92%)] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {highlightCards.map((card, idx) => {
+              const Icon = card.Icon;
+              return (
+                <motion.div
+                  key={card.title}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.08 + idx * 0.06,
+                    ease: EASE_OUT,
+                  }}
+                  whileHover={{ y: -4 }}
+                  className="bg-white border border-slate-100 rounded-xl p-6 text-center shadow-[0_14px_34px_rgba(15,36,56,0.1)] flex flex-col items-center justify-between"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-full bg-amber-50 text-[#f59e0b] inline-grid place-items-center mb-3.5">
+                      <Icon className="w-6 h-6" strokeWidth={1.7} />
+                    </div>
+                    <h2 className="text-[15px] font-bold text-[#0f2438] m-0">
+                      {card.title}
+                    </h2>
+                    <p className="text-xs text-slate-500 mt-1.5 mb-5 leading-relaxed">
+                      {card.desc}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={card.onClick}
+                    className="rounded-full px-5 py-2 bg-[#f59e0b] hover:bg-[#d97706] text-white text-xs font-bold border-0 cursor-pointer transition-colors whitespace-nowrap"
+                  >
+                    {card.cta}
+                  </button>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
 
         <main className="flex-1">
-          <section
-            id="home"
-            className="relative overflow-hidden py-7 sm:py-9 border-b border-[#152822] no-print"
-          >
-            <motion.div
-              aria-hidden="true"
-              animate={{ opacity: [0.25, 0.4, 0.25], scale: [1, 1.05, 1] }}
-              transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-              className="pointer-events-none absolute -top-40 right-[8%] w-[460px] h-[460px] rounded-full bg-[radial-gradient(circle,rgba(31,168,125,0.2)_0%,transparent_70%)]"
-            />
-
-            <div className="w-[min(1360px,94%)] mx-auto relative grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-7 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: EASE_OUT }}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-                  <span className="text-xs font-medium text-[#3ad19e]">
-                    {t.heroKicker}
-                  </span>
-                  <div
-                    role="group"
-                    aria-label="Pilih bahasa"
-                    className="inline-flex items-center gap-1 p-0.5 bg-[#0f1f1a] rounded-lg border border-[#1d352d]"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setLang('id')}
-                      className={`px-2.5 py-1 text-[11px] font-semibold rounded-md transition-colors cursor-pointer ${
-                        lang === 'id'
-                          ? 'bg-[#24b486] text-[#041b14]'
-                          : 'text-[#97b0a5] hover:text-[#ecf5f1]'
-                      }`}
-                    >
-                      ID
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setLang('en')}
-                      className={`px-2.5 py-1 text-[11px] font-semibold rounded-md transition-colors cursor-pointer ${
-                        lang === 'en'
-                          ? 'bg-[#24b486] text-[#041b14]'
-                          : 'text-[#97b0a5] hover:text-[#ecf5f1]'
-                      }`}
-                    >
-                      EN
-                    </button>
-                  </div>
-                </div>
-
-                <h1 className="font-display text-[clamp(2rem,3.4vw,3.15rem)] leading-[1.08] tracking-[-0.02em] text-[#ecf5f1] font-semibold m-0 text-balance max-w-[18ch]">
-                  {t.heroTitle}
-                </h1>
-                <p className="mt-3 mb-0 max-w-[58ch] text-[#b2c7be] text-[15px] leading-relaxed">
-                  {t.heroSubtitle}
-                </p>
-
-                <div className="mt-5 flex flex-wrap items-center gap-6 text-xs text-[#97b0a5] tabular-nums">
-                  <span>
-                    <strong className="text-[#ecf5f1] font-semibold">
-                      {t.stat1Val}
-                    </strong>{' '}
-                    · Banda Aceh hingga Gayo
-                  </span>
-                  <span>
-                    <strong className="text-[#ecf5f1] font-semibold">
-                      {t.stat2Val}
-                    </strong>{' '}
-                    · {t.stat3Val}
-                  </span>
-                  <a
-                    href="#explorer"
-                    className="inline-flex items-center gap-1 font-semibold text-[#3ad19e] no-underline hover:underline"
-                  >
-                    <span>{t.heroPrimaryCta}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </motion.div>
-
-              <HeroDestinationSlideshow
-                destinations={db.destinations}
-                fallbackImage={HERO_IMAGE}
-                onSelectDestination={(dest) => {
-                  setActiveTab('destinations');
-                  handleShowDetail('destinations', dest.id);
-                  document
-                    .getElementById('explorer')
-                    ?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              />
-            </div>
-          </section>
-
-          <section id="explorer" className="py-10 sm:py-12 no-print">
-            <div className="w-[min(1360px,94%)] mx-auto grid grid-cols-1 lg:grid-cols-[1.12fr_0.88fr] gap-6 items-start">
+          <section id="explorer" className="py-12 sm:py-14 bg-white no-print">
+            <div className="w-[min(1260px,94%)] mx-auto grid grid-cols-1 lg:grid-cols-[1.12fr_0.88fr] gap-6 items-start">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                   <div
                     role="tablist"
                     aria-label="Kategori katalog"
-                    className="inline-flex items-center gap-1 p-1 bg-[#0b1814] border border-[#1d352d] rounded-xl flex-wrap"
+                    className="inline-flex items-center gap-1 p-1 bg-slate-100 border border-slate-200 rounded-xl flex-wrap"
                   >
                     {explorerTabs.map((tab) => {
                       const isActive = activeTab === tab.id;
@@ -513,8 +592,8 @@ export default function App() {
                           }}
                           className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap tabular-nums ${
                             isActive
-                              ? 'bg-[#24b486] text-[#041b14]'
-                              : 'text-[#97b0a5] hover:text-[#ecf5f1]'
+                              ? 'bg-[#0f2438] text-white'
+                              : 'text-slate-600 hover:text-[#0f2438]'
                           }`}
                         >
                           {tab.label} ({tab.count})
@@ -532,7 +611,7 @@ export default function App() {
                         setCategoryFilter('');
                         setFavTypeFilter('');
                       }}
-                      className="text-xs font-semibold text-[#3ad19e] hover:underline bg-transparent border-0 p-0 cursor-pointer whitespace-nowrap"
+                      className="text-xs font-semibold text-[#d97706] hover:underline bg-transparent border-0 p-0 cursor-pointer whitespace-nowrap"
                     >
                       Reset filter
                     </button>
@@ -601,7 +680,7 @@ export default function App() {
                 </div>
 
                 {activeTab === 'destinations' && (
-                  <div className="flex items-center justify-between gap-3 mb-4 text-xs text-[#97b0a5]">
+                  <div className="flex items-center justify-between gap-3 mb-4 text-xs text-slate-500">
                     <span className="tabular-nums">
                       Menampilkan {filteredDestinations.length} dari{' '}
                       {db.destinations.length} destinasi
@@ -612,7 +691,7 @@ export default function App() {
                         setSortBy(e.target.value as 'featured' | 'name' | 'cost')
                       }
                       aria-label="Urutkan destinasi"
-                      className="px-2.5 py-1 border border-[#1d352d] rounded-md bg-[#0b1814] text-[#ecf5f1] text-xs outline-none focus:border-[#24b486]"
+                      className="px-2.5 py-1 border border-slate-200 rounded-md bg-slate-50 text-[#0f2438] text-xs outline-none focus:border-[#f59e0b]"
                     >
                       <option value="featured">Urutkan: Unggulan</option>
                       <option value="name">Nama A–Z</option>
@@ -648,7 +727,7 @@ export default function App() {
                           />
                         ))
                       ) : (
-                        <div className="col-span-full p-8 text-center text-[#97b0a5] bg-[#0f1f1a] border border-[#1d352d] rounded-xl">
+                        <div className="col-span-full p-8 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-xl">
                           Tidak ada destinasi yang cocok dengan filter saat ini.
                         </div>
                       ))}
@@ -671,7 +750,7 @@ export default function App() {
                           />
                         ))
                       ) : (
-                        <div className="col-span-full p-8 text-center text-[#97b0a5] bg-[#0f1f1a] border border-[#1d352d] rounded-xl">
+                        <div className="col-span-full p-8 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-xl">
                           Tidak ada kuliner yang cocok dengan filter saat ini.
                         </div>
                       ))}
@@ -694,7 +773,7 @@ export default function App() {
                           />
                         ))
                       ) : (
-                        <div className="col-span-full p-8 text-center text-[#97b0a5] bg-[#0f1f1a] border border-[#1d352d] rounded-xl">
+                        <div className="col-span-full p-8 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-xl">
                           Tidak ada akomodasi yang cocok dengan filter saat ini.
                         </div>
                       ))}
@@ -718,7 +797,7 @@ export default function App() {
                           />
                         ))
                       ) : (
-                        <div className="col-span-full p-8 text-center text-[#97b0a5] bg-[#0f1f1a] border border-[#1d352d] rounded-xl">
+                        <div className="col-span-full p-8 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-xl">
                           Belum ada favorit tersimpan. Klik tombol hati pada
                           kartu untuk menyimpannya.
                         </div>
@@ -727,7 +806,7 @@ export default function App() {
                 </AnimatePresence>
               </div>
 
-              <div className="lg:sticky lg:top-20">
+              <div className="lg:sticky lg:top-6">
                 <SplitPreviewPanel
                   regions={regions}
                   activeRegionFilter={regionFilter}
@@ -761,51 +840,51 @@ export default function App() {
           />
         </main>
 
-        <footer className="bg-[#050c0a] text-[#b2c7be] py-10 no-print border-t border-[#152822]">
-          <div className="w-[min(1360px,94%)] mx-auto flex flex-col md:flex-row justify-between gap-6 md:items-center">
+        <footer className="bg-[#06182c] text-slate-300 py-10 no-print">
+          <div className="w-[min(1260px,94%)] mx-auto flex flex-col md:flex-row justify-between gap-6 md:items-center">
             <div>
-              <span className="font-display text-lg font-semibold text-[#ecf5f1]">
-                Pemuda Aceh
+              <span className="font-display text-lg font-bold text-white">
+                Pemuda <span className="text-[#f59e0b]">Aceh</span>
               </span>
-              <p className="mt-1 mb-0 text-xs text-[#97b0a5]">
+              <p className="mt-1 mb-0 text-xs text-slate-400">
                 Temukan Aceh, ciptakan pengalaman perjalanan yang bermakna.
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-5 text-xs text-[#97b0a5]">
+            <div className="flex flex-wrap items-center gap-5 text-xs text-slate-300">
               <button
                 type="button"
                 onClick={() => jumpToExplorerTab('destinations')}
-                className="bg-transparent border-0 p-0 text-xs text-[#d9f0e7] cursor-pointer hover:underline"
+                className="bg-transparent border-0 p-0 text-xs text-slate-200 cursor-pointer hover:text-[#fbbf24]"
               >
                 {t.navDest}
               </button>
               <button
                 type="button"
                 onClick={() => jumpToExplorerTab('foods')}
-                className="bg-transparent border-0 p-0 text-xs text-[#d9f0e7] cursor-pointer hover:underline"
+                className="bg-transparent border-0 p-0 text-xs text-slate-200 cursor-pointer hover:text-[#fbbf24]"
               >
                 {t.navFood}
               </button>
               <button
                 type="button"
                 onClick={() => jumpToExplorerTab('stays')}
-                className="bg-transparent border-0 p-0 text-xs text-[#d9f0e7] cursor-pointer hover:underline"
+                className="bg-transparent border-0 p-0 text-xs text-slate-200 cursor-pointer hover:text-[#fbbf24]"
               >
                 {t.navStay}
               </button>
               <a
                 href="#planner"
-                className="text-[#d9f0e7] no-underline hover:underline"
+                className="text-slate-200 no-underline hover:text-[#fbbf24]"
               >
                 {t.navPlan}
               </a>
               <a
                 href="#dashboard"
-                className="text-[#d9f0e7] no-underline hover:underline"
+                className="text-slate-200 no-underline hover:text-[#fbbf24]"
               >
                 {t.navDash}
               </a>
-              <span className="text-[#728c81]">
+              <span className="text-slate-400">
                 Data contoh lokal · Harga &amp; kontak simulasi
               </span>
             </div>
@@ -821,7 +900,7 @@ export default function App() {
               exit={{ opacity: 0, y: 10, scale: 0.96 }}
               transition={{ duration: 0.2, ease: EASE_OUT }}
               role="status"
-              className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#143026] border border-[#24b486]/40 text-[#ecf5f1] px-4 py-2.5 rounded-lg text-sm font-medium shadow-2xl z-30 no-print"
+              className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#0f2438] text-white px-4 py-2.5 rounded-full text-sm font-medium shadow-2xl z-30 no-print"
             >
               {toastMsg}
             </motion.div>

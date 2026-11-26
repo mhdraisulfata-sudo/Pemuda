@@ -60,12 +60,12 @@ export function SplitPreviewPanel({
   const showDetail = panelMode === 'detail' && selected !== null;
 
   return (
-    <aside className="bg-[#0f1f1a] border border-[#1d352d] rounded-2xl overflow-hidden card-shadow">
-      <div className="px-4 py-3 border-b border-[#182c25] bg-[#0b1814] flex items-center justify-between gap-3">
+    <aside className="bg-white border border-slate-200 rounded-2xl overflow-hidden card-shadow">
+      <div className="px-4 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between gap-3">
         <div
           role="tablist"
           aria-label="Mode panel kanan"
-          className="inline-flex items-center gap-1 p-1 bg-[#07110e] border border-[#1d352d] rounded-lg"
+          className="inline-flex items-center gap-1 p-1 bg-white border border-slate-200 rounded-lg"
         >
           <button
             type="button"
@@ -74,8 +74,8 @@ export function SplitPreviewPanel({
             onClick={() => onChangeMode('map')}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors cursor-pointer whitespace-nowrap ${
               !showDetail
-                ? 'bg-[#24b486] text-[#041b14]'
-                : 'text-[#97b0a5] hover:text-[#ecf5f1]'
+                ? 'bg-[#0f2438] text-white'
+                : 'text-slate-600 hover:text-[#0f2438]'
             }`}
           >
             <MapIcon className="w-3.5 h-3.5" />
@@ -89,10 +89,10 @@ export function SplitPreviewPanel({
             onClick={() => selected && onChangeMode('detail')}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors whitespace-nowrap ${
               showDetail
-                ? 'bg-[#24b486] text-[#041b14] cursor-pointer'
+                ? 'bg-[#0f2438] text-white cursor-pointer'
                 : selected
-                  ? 'text-[#97b0a5] hover:text-[#ecf5f1] cursor-pointer'
-                  : 'text-[#52695f] cursor-not-allowed'
+                  ? 'text-slate-600 hover:text-[#0f2438] cursor-pointer'
+                  : 'text-slate-400 cursor-not-allowed'
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
@@ -104,7 +104,7 @@ export function SplitPreviewPanel({
           <button
             type="button"
             onClick={() => onSelectRegion('')}
-            className="text-xs font-semibold text-[#3ad19e] hover:underline bg-transparent border-0 p-0 cursor-pointer whitespace-nowrap"
+            className="text-xs font-semibold text-[#d97706] hover:underline bg-transparent border-0 p-0 cursor-pointer whitespace-nowrap"
           >
             Reset wilayah
           </button>
@@ -143,19 +143,17 @@ export function SplitPreviewPanel({
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="p-5"
           >
-            <div className="flex items-start justify-between gap-3 mb-3">
-              <div>
-                <h3 className="font-display text-lg font-semibold text-[#ecf5f1] m-0">
-                  Orientasi wilayah Aceh
-                </h3>
-                <p className="text-xs text-[#97b0a5] mt-0.5 mb-0">
-                  Klik titik pada peta atau daftar di bawah untuk menyaring
-                  lokasi di sebelah kiri.
-                </p>
-              </div>
+            <div className="mb-3">
+              <h3 className="font-display text-lg font-semibold text-[#0f2438] m-0">
+                Orientasi wilayah Aceh
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5 mb-0">
+                Klik titik pada peta atau daftar di bawah untuk menyaring
+                lokasi di sebelah kiri.
+              </p>
             </div>
 
-            <div className="bg-[#081310] border border-[#182c25] rounded-xl p-3">
+            <div className="bg-[#f1f6fa] border border-slate-200 rounded-xl p-3">
               <svg
                 viewBox="0 0 440 290"
                 role="img"
@@ -164,15 +162,15 @@ export function SplitPreviewPanel({
               >
                 <path
                   d="M95 20 L160 35 188 70 238 82 260 115 315 125 335 170 310 210 270 220 246 270 205 250 176 225 140 220 115 180 80 160 70 110 45 75Z"
-                  fill="#133127"
-                  stroke="#24b486"
+                  fill="#d5e6f3"
+                  stroke="#0f2438"
                   strokeWidth="2.2"
                 />
                 <motion.path
                   d="M70 110 Q140 125 180 110 T310 155"
                   fill="none"
-                  stroke="#4ae3b1"
-                  strokeOpacity="0.55"
+                  stroke="#f59e0b"
+                  strokeOpacity="0.85"
                   strokeWidth="3"
                   strokeDasharray="6 6"
                   initial={{ pathLength: 0 }}
@@ -187,9 +185,7 @@ export function SplitPreviewPanel({
                   return (
                     <g
                       key={reg}
-                      onClick={() =>
-                        onSelectRegion(isActive ? '' : reg)
-                      }
+                      onClick={() => onSelectRegion(isActive ? '' : reg)}
                       className="cursor-pointer"
                     >
                       {isActive && (
@@ -197,22 +193,22 @@ export function SplitPreviewPanel({
                           cx={pos.cx}
                           cy={pos.cy}
                           r="15"
-                          fill="#24b486"
-                          fillOpacity="0.24"
+                          fill="#f59e0b"
+                          fillOpacity="0.25"
                         />
                       )}
                       <circle
                         cx={pos.cx}
                         cy={pos.cy}
                         r={isActive ? '9' : '7'}
-                        fill={isActive ? '#3ad19e' : '#1fa87d'}
-                        stroke="#07110e"
+                        fill={isActive ? '#f59e0b' : '#0f2438'}
+                        stroke="#ffffff"
                         strokeWidth="2.5"
                       />
                       <text
                         x={pos.tx}
                         y={pos.ty}
-                        fill={isActive ? '#3ad19e' : '#dceee6'}
+                        fill={isActive ? '#b45309' : '#0f2438'}
                         fontSize="12"
                         fontWeight={isActive ? '700' : '600'}
                       >
@@ -222,7 +218,7 @@ export function SplitPreviewPanel({
                   );
                 })}
 
-                <text x="16" y="276" fill="#728c81" fontSize="10">
+                <text x="16" y="276" fill="#64748b" fontSize="10">
                   Skema ilustratif · klik wilayah untuk filter
                 </text>
               </svg>
@@ -236,18 +232,18 @@ export function SplitPreviewPanel({
                     key={region}
                     className={`flex items-center justify-between gap-2 rounded-lg border px-3 py-2 transition-colors ${
                       isActive
-                        ? 'bg-[#132c24] border-[#24b486]'
-                        : 'bg-[#091411] border-[#182c25] hover:border-[#2c5245]'
+                        ? 'bg-amber-50 border-[#f59e0b]'
+                        : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                     }`}
                   >
                     <button
                       type="button"
                       onClick={() => onSelectRegion(isActive ? '' : region)}
-                      className="flex-1 text-left bg-transparent border-0 p-0 cursor-pointer flex items-center gap-2 text-xs font-semibold text-[#ecf5f1]"
+                      className="flex-1 text-left bg-transparent border-0 p-0 cursor-pointer flex items-center gap-2 text-xs font-semibold text-[#0f2438]"
                     >
                       <MapPin
                         className={`w-3.5 h-3.5 ${
-                          isActive ? 'text-[#3ad19e]' : 'text-[#849f93]'
+                          isActive ? 'text-[#d97706]' : 'text-slate-500'
                         }`}
                       />
                       <span>{region}</span>
@@ -259,7 +255,7 @@ export function SplitPreviewPanel({
                         region + ', Aceh'
                       )}`}
                       aria-label={`Buka ${region} di Google Maps`}
-                      className="text-[11px] font-medium text-[#97b0a5] hover:text-[#3ad19e] no-underline inline-flex items-center gap-1 shrink-0"
+                      className="text-[11px] font-medium text-slate-600 hover:text-[#0f2438] no-underline inline-flex items-center gap-1 shrink-0"
                     >
                       <span>Maps</span>
                       <ArrowUpRight className="w-3 h-3" />
@@ -269,11 +265,11 @@ export function SplitPreviewPanel({
               })}
             </div>
 
-            <div className="mt-4 pt-4 border-t border-[#182c25] grid grid-cols-2 gap-3">
+            <div className="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => onSelectRegion('Sabang')}
-                className="group text-left bg-[#091411] border border-[#182c25] hover:border-[#24b486] rounded-lg overflow-hidden p-0 cursor-pointer transition-colors"
+                className="group text-left bg-slate-50 border border-slate-200 hover:border-[#f59e0b] rounded-lg overflow-hidden p-0 cursor-pointer transition-colors"
               >
                 <div className="aspect-[16/10] photo-gradient overflow-hidden">
                   <img
@@ -283,14 +279,14 @@ export function SplitPreviewPanel({
                     className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
                   />
                 </div>
-                <div className="p-2.5 text-xs font-semibold text-[#ecf5f1]">
+                <div className="p-2.5 text-xs font-semibold text-[#0f2438]">
                   Bahari Sabang
                 </div>
               </button>
               <button
                 type="button"
                 onClick={() => onSelectRegion('Aceh Tengah')}
-                className="group text-left bg-[#091411] border border-[#182c25] hover:border-[#24b486] rounded-lg overflow-hidden p-0 cursor-pointer transition-colors"
+                className="group text-left bg-slate-50 border border-slate-200 hover:border-[#f59e0b] rounded-lg overflow-hidden p-0 cursor-pointer transition-colors"
               >
                 <div className="aspect-[16/10] photo-gradient overflow-hidden">
                   <img
@@ -300,7 +296,7 @@ export function SplitPreviewPanel({
                     className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
                   />
                 </div>
-                <div className="p-2.5 text-xs font-semibold text-[#ecf5f1]">
+                <div className="p-2.5 text-xs font-semibold text-[#0f2438]">
                   Gayo &amp; Laut Tawar
                 </div>
               </button>
@@ -351,7 +347,7 @@ function DetailPreviewBody({
             onResetImgError();
             onBackToMap();
           }}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3ad19e] hover:underline bg-transparent border-0 p-0 cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0f2438] hover:text-[#d97706] bg-transparent border-0 p-0 cursor-pointer"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Kembali ke peta</span>
@@ -362,8 +358,8 @@ function DetailPreviewBody({
           onClick={onToggleFav}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold cursor-pointer transition-colors ${
             isFav
-              ? 'bg-[#2a1316] text-[#f28b94] border-[#52272c]'
-              : 'bg-[#091411] text-[#ecf5f1] border-[#1d352d] hover:border-[#2c5245]'
+              ? 'bg-rose-50 text-rose-700 border-rose-200'
+              : 'bg-slate-50 text-[#0f2438] border-slate-200 hover:border-slate-300'
           }`}
         >
           <Heart className={`w-3.5 h-3.5 ${isFav ? 'fill-current' : ''}`} />
@@ -372,7 +368,7 @@ function DetailPreviewBody({
       </div>
 
       {img && (
-        <div className="aspect-[16/10] w-full rounded-xl overflow-hidden border border-[#1d352d] mb-4 photo-gradient">
+        <div className="aspect-[16/10] w-full rounded-xl overflow-hidden border border-slate-200 mb-4 photo-gradient">
           <img
             src={img}
             alt={`Foto ${item.nama}`}
@@ -383,69 +379,69 @@ function DetailPreviewBody({
         </div>
       )}
 
-      <div className="text-xs font-medium text-[#3ad19e]">
+      <div className="text-xs font-semibold text-[#d97706] capitalize">
         {isDest ? `Destinasi · ${dest?.kategori}` : isFood ? 'Kuliner & UMKM' : 'Akomodasi'}
         {item.wilayah ? ` · ${item.wilayah}` : ''}
       </div>
-      <h3 className="font-display text-2xl font-semibold text-[#ecf5f1] mt-1 mb-2">
+      <h3 className="font-display text-2xl font-semibold text-[#0f2438] mt-1 mb-2">
         {item.nama}
       </h3>
-      <p className="text-sm text-[#b2c7be] leading-relaxed mb-4">
+      <p className="text-sm text-slate-600 leading-relaxed mb-4">
         {dest?.deskripsi || food?.catatan || stay?.catatan || 'Informasi contoh.'}
       </p>
 
       {dest && (
-        <div className="bg-[#091411] border border-[#182c25] rounded-xl p-4 text-[13px] space-y-2 text-[#dceee6]">
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-[13px] space-y-2 text-[#0f2438]">
           <div>
-            <span className="text-[#97b0a5]">Alamat:</span> {dest.alamat}
+            <span className="text-slate-500">Alamat:</span> {dest.alamat}
           </div>
           <div className="tabular-nums">
-            <span className="text-[#97b0a5]">Estimasi biaya:</span>{' '}
+            <span className="text-slate-500">Estimasi biaya:</span>{' '}
             {rupiah(dest.estimasiBiaya)} (simulasi)
           </div>
           <div>
-            <span className="text-[#97b0a5]">Fasilitas:</span>{' '}
+            <span className="text-slate-500">Fasilitas:</span>{' '}
             {(dest.fasilitas || []).join(', ')}
           </div>
           <div>
-            <span className="text-[#97b0a5]">Fasilitas ibadah:</span>{' '}
+            <span className="text-slate-500">Fasilitas ibadah:</span>{' '}
             {(dest.fasilitasIbadah || []).join(', ')}
           </div>
-          <div className="text-xs text-[#849f93] pt-1">
+          <div className="text-xs text-slate-500 pt-1">
             {dest.catatanVerifikasi || 'Informasi perlu verifikasi.'}
           </div>
         </div>
       )}
 
       {food && (
-        <div className="bg-[#091411] border border-[#182c25] rounded-xl p-4 text-[13px] space-y-2 text-[#dceee6]">
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-[13px] space-y-2 text-[#0f2438]">
           <div className="tabular-nums">
-            <span className="text-[#97b0a5]">Harga:</span> {rupiah(food.harga)}{' '}
+            <span className="text-slate-500">Harga:</span> {rupiah(food.harga)}{' '}
             (simulasi)
           </div>
           <div>
-            <span className="text-[#97b0a5]">Status halal:</span>{' '}
+            <span className="text-slate-500">Status halal:</span>{' '}
             {food.statusSertifikasiHalal}
           </div>
           <div>
-            <span className="text-[#97b0a5]">Sumber:</span>{' '}
+            <span className="text-slate-500">Sumber:</span>{' '}
             {food.sumberVerifikasi || 'Belum tersedia'}
           </div>
         </div>
       )}
 
       {stay && (
-        <div className="bg-[#091411] border border-[#182c25] rounded-xl p-4 text-[13px] space-y-2 text-[#dceee6]">
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-[13px] space-y-2 text-[#0f2438]">
           <div className="tabular-nums">
-            <span className="text-[#97b0a5]">Harga/malam:</span>{' '}
+            <span className="text-slate-500">Harga/malam:</span>{' '}
             {rupiah(stay.hargaPerMalam)} (simulasi)
           </div>
           <div>
-            <span className="text-[#97b0a5]">Fasilitas:</span>{' '}
+            <span className="text-slate-500">Fasilitas:</span>{' '}
             {(stay.fasilitas || []).join(', ')}
           </div>
           <div>
-            <span className="text-[#97b0a5]">Ramah Muslim:</span>{' '}
+            <span className="text-slate-500">Ramah Muslim:</span>{' '}
             {(stay.fasilitasRamahMuslim || []).join(', ')}
           </div>
         </div>
@@ -456,7 +452,7 @@ function DetailPreviewBody({
           <button
             type="button"
             onClick={() => onAddToItinerary(dest.id)}
-            className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2.5 bg-[#24b486] text-[#041b14] font-semibold text-xs border-0 cursor-pointer hover:bg-[#2ec493] transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 bg-[#f59e0b] text-white font-semibold text-xs border-0 cursor-pointer hover:bg-[#d97706] transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Masukkan ke Itinerary</span>
@@ -468,7 +464,7 @@ function DetailPreviewBody({
             target="_blank"
             rel="noopener noreferrer"
             href={safeUrl(dest.mapsUrl) || '#'}
-            className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2.5 bg-[#142a23] border border-[#244237] text-[#d9f0e7] font-semibold text-xs no-underline hover:bg-[#1b382f] transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 bg-[#0f2438] text-white font-semibold text-xs no-underline hover:bg-[#1a3957] transition-colors"
           >
             <span>Buka Google Maps</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -482,7 +478,7 @@ function DetailPreviewBody({
             href={`https://wa.me/${encodeURIComponent(contact)}?text=${encodeURIComponent(
               'Halo, saya ingin bertanya tentang informasi layanan (mode demo Pemuda Aceh).'
             )}`}
-            className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2.5 bg-[#142a23] border border-[#244237] text-[#d9f0e7] font-semibold text-xs no-underline hover:bg-[#1b382f] transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 bg-[#0f2438] text-white font-semibold text-xs no-underline hover:bg-[#1a3957] transition-colors"
           >
             <span>Hubungi WhatsApp demo</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -491,13 +487,13 @@ function DetailPreviewBody({
       </div>
 
       {photoSource && (
-        <p className="text-[11px] text-[#728c81] mt-3 mb-0">
+        <p className="text-[11px] text-slate-500 mt-3 mb-0">
           Foto:{' '}
           <a
             target="_blank"
             rel="noopener noreferrer"
             href={photoSource}
-            className="underline text-[#97b0a5] hover:text-white"
+            className="underline text-slate-600 hover:text-[#0f2438]"
           >
             Wikimedia Commons
           </a>

@@ -238,12 +238,12 @@ export function DashboardSection({
         : 'Estimasi biaya (Rp)';
 
   const inputClass =
-    'w-full px-3.5 py-2.5 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] placeholder-[#728c81] text-sm outline-none focus:border-[#24b486] transition-colors';
-  const labelClass = 'text-xs font-medium text-[#97b0a5]';
+    'w-full px-3.5 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-[#0f2438] placeholder-slate-400 text-sm outline-none focus:border-[#f59e0b] focus:bg-white transition-colors';
+  const labelClass = 'text-xs font-semibold text-slate-600';
 
   return (
-    <section id="dashboard" className="py-16 no-print">
-      <div className="w-[min(1360px,94%)] mx-auto">
+    <section id="dashboard" className="py-16 bg-white no-print">
+      <div className="w-[min(1260px,94%)] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -252,13 +252,13 @@ export function DashboardSection({
           className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-7"
         >
           <div>
-            <div className="text-[#3ad19e] font-semibold text-xs tracking-wide">
+            <div className="text-[#d97706] font-semibold text-xs tracking-wide">
               Manajemen Konten Lokal
             </div>
-            <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#ecf5f1] tracking-[-0.015em] font-semibold">
+            <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#0f2438] tracking-[-0.015em] font-semibold">
               Dashboard pengelola
             </h2>
-            <p className="text-[#97b0a5] m-0 max-w-[540px] text-[15px]">
+            <p className="text-slate-600 m-0 max-w-[540px] text-[15px]">
               CRUD lokal untuk data destinasi, kuliner, akomodasi, dan paket
               wisata. Tidak memerlukan akun.
             </p>
@@ -266,7 +266,7 @@ export function DashboardSection({
           <button
             type="button"
             onClick={onResetAll}
-            className="border border-[#1d352d] bg-[#0f1f1a] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer self-start sm:self-auto whitespace-nowrap"
+            className="border border-slate-200 bg-white text-[#0f2438] rounded-full px-4 py-2 text-xs font-semibold hover:bg-slate-50 transition-colors cursor-pointer self-start sm:self-auto whitespace-nowrap"
           >
             Reset data contoh
           </button>
@@ -277,9 +277,9 @@ export function DashboardSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow"
+          className="bg-white border border-slate-200 rounded-xl p-6 card-shadow"
         >
-          <div className="inline-flex items-center gap-1 p-1 bg-[#081310] border border-[#1d352d] rounded-lg flex-wrap mb-6">
+          <div className="inline-flex items-center gap-1 p-1 bg-slate-100 border border-slate-200 rounded-lg flex-wrap mb-6">
             {TAB_LABELS.map((tab) => (
               <button
                 key={tab.type}
@@ -287,8 +287,8 @@ export function DashboardSection({
                 onClick={() => handleTabChange(tab.type)}
                 className={`rounded-md px-3.5 py-1.5 text-xs font-semibold cursor-pointer transition-colors whitespace-nowrap ${
                   adminType === tab.type
-                    ? 'bg-[#24b486] text-[#041b14]'
-                    : 'bg-transparent text-[#97b0a5] hover:text-[#ecf5f1]'
+                    ? 'bg-[#0f2438] text-white'
+                    : 'bg-transparent text-slate-600 hover:text-[#0f2438]'
                 }`}
               >
                 {tab.label}
@@ -298,7 +298,7 @@ export function DashboardSection({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
+              <h3 className="mt-0 mb-4 font-display text-[#0f2438] font-semibold text-lg">
                 Kelola {TYPE_NAMES[adminType]}
               </h3>
               <form
@@ -445,7 +445,7 @@ export function DashboardSection({
                 </div>
 
                 {isPackages && (
-                  <div className="sm:col-span-2 grid gap-2.5 border border-dashed border-[#1d352d] p-3.5 rounded-xl">
+                  <div className="sm:col-span-2 grid gap-2.5 border border-dashed border-slate-300 p-3.5 rounded-xl">
                     <div className="grid gap-1.5 content-start">
                       <label htmlFor="fPackageDestinations" className={labelClass}>
                         Destinasi dalam paket (pilih minimal satu)
@@ -498,18 +498,18 @@ export function DashboardSection({
                 <motion.button
                   type="submit"
                   whileTap={{ scale: 0.98 }}
-                  className="sm:col-span-2 border-0 rounded-lg px-4 py-2.5 bg-[#24b486] text-[#041b14] text-xs font-semibold btn-primary-shadow hover:bg-[#2ec493] transition-colors cursor-pointer"
+                  className="sm:col-span-2 border-0 rounded-full px-4 py-2.5 bg-[#f59e0b] text-white text-xs font-semibold btn-primary-shadow hover:bg-[#d97706] transition-colors cursor-pointer"
                 >
                   {editId ? 'Simpan perubahan' : 'Tambah data'}
                 </motion.button>
               </form>
-              <p className="text-xs text-[#849f93] mt-2.5">
+              <p className="text-xs text-slate-500 mt-2.5">
                 Form menyesuaikan jenis data. Data disimpan di browser ini saja.
               </p>
             </div>
 
             <div>
-              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
+              <h3 className="mt-0 mb-4 font-display text-[#0f2438] font-semibold text-lg">
                 Data tersimpan
               </h3>
               <div className="max-h-[380px] overflow-auto pr-1">
@@ -522,26 +522,26 @@ export function DashboardSection({
                     return (
                       <div
                         key={x.id}
-                        className="flex justify-between gap-2.5 py-3 border-b border-[#182c25] text-[13px] items-center"
+                        className="flex justify-between gap-2.5 py-3 border-b border-slate-100 text-[13px] items-center"
                       >
                         <span className="min-w-0">
-                          <b className="text-[#ecf5f1] font-medium block truncate">
+                          <b className="text-[#0f2438] font-semibold block truncate">
                             {x.nama}
                           </b>
-                          <small className="text-[#97b0a5] text-xs">{sub}</small>
+                          <small className="text-slate-500 text-xs">{sub}</small>
                         </span>
                         <span className="whitespace-nowrap flex gap-1.5 items-center shrink-0">
                           <button
                             type="button"
                             onClick={() => handleEdit(x.id)}
-                            className="border border-[#1d352d] bg-[#091411] hover:border-[#2c5245] rounded-lg px-3 py-1.5 text-xs font-medium text-[#ecf5f1] cursor-pointer transition-colors"
+                            className="border border-slate-200 bg-slate-50 hover:bg-slate-100 rounded-lg px-3 py-1.5 text-xs font-medium text-[#0f2438] cursor-pointer transition-colors"
                           >
                             Edit
                           </button>
                           <button
                             type="button"
                             onClick={() => onDeleteItem(adminType, x.id)}
-                            className="border border-[#1d352d] bg-[#091411] hover:border-[#52272c] hover:text-[#f28b94] rounded-lg px-3 py-1.5 text-xs font-medium text-[#97b0a5] cursor-pointer transition-colors"
+                            className="border border-slate-200 bg-slate-50 hover:border-rose-300 hover:text-rose-600 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 cursor-pointer transition-colors"
                           >
                             Hapus
                           </button>
@@ -550,7 +550,7 @@ export function DashboardSection({
                     );
                   })
                 ) : (
-                  <div className="p-8 text-center text-[#97b0a5] bg-[#091411] border border-[#1d352d] rounded-xl">
+                  <div className="p-8 text-center text-slate-500 bg-slate-50 border border-slate-200 rounded-xl">
                     Belum ada data.
                   </div>
                 )}

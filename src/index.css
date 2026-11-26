@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
-  --green: #24b486;
-  --emerald: #1fa87d;
-  --turq: #19a7a0;
-  --gold: #d9ae58;
-  --ink: #ecf5f1;
-  --muted: #97b0a5;
-  --paper: #07110e;
-  --surface: #0f1f1a;
-  --line: #1d352d;
-  --shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  color-scheme: light;
+  --navy: #0f2438;
+  --amber: #f59e0b;
+  --amber-hover: #d97706;
+  --emerald: #0d8a68;
+  --ink: #0f2438;
+  --muted: #5b6b7c;
+  --paper: #ffffff;
+  --surface: #f8fafc;
+  --line: #e2e8f0;
+  --shadow: 0 14px 36px rgba(15, 36, 56, 0.1);
 }
 
 html {
@@ -32,7 +32,7 @@ body {
 }
 
 .card-shadow {
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 4px 18px rgba(15, 36, 56, 0.06);
 }
 
 .card-shadow:hover {
@@ -40,11 +40,11 @@ body {
 }
 
 .btn-primary-shadow {
-  box-shadow: 0 6px 20px rgba(31, 168, 125, 0.22);
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.28);
 }
 
 .photo-gradient {
-  background: linear-gradient(135deg, #0d221c, #14332a);
+  background: linear-gradient(135deg, #e2ecf5, #c4d9ec);
 }
 
 .print-sheet {
