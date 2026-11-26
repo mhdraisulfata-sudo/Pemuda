@@ -413,8 +413,33 @@ export const TRANSLATIONS: Record<
     navFood: string;
     navStay: string;
     navPlan: string;
+    navDash: string;
     explore: string;
-    favButton: string;
+    heroKicker: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    heroPrimaryCta: string;
+    heroSecondaryCta: string;
+    heroCaptionTitle: string;
+    heroCaptionSub: string;
+    stat1Val: string;
+    stat1Desc: string;
+    stat2Val: string;
+    stat2Desc: string;
+    stat3Val: string;
+    stat3Desc: string;
+    stat4Val: string;
+    stat4Desc: string;
+    spotlightKicker: string;
+    spotlightTitle: string;
+    spotlightDesc: string;
+    spotlightSabangTitle: string;
+    spotlightSabangDesc: string;
+    spotlightGayoTitle: string;
+    spotlightGayoDesc: string;
+    spotlightHeritageTitle: string;
+    spotlightHeritageDesc: string;
+    spotlightAction: string;
   }
 > = {
   id: {
@@ -423,8 +448,38 @@ export const TRANSLATIONS: Record<
     navFood: 'Kuliner',
     navStay: 'Akomodasi',
     navPlan: 'Rencana Trip',
-    explore: 'Jelajahi',
-    favButton: '♥ Favorit',
+    navDash: 'Dashboard',
+    explore: 'Susun Trip',
+    heroKicker: 'Panduan Perjalanan Aceh · Data Kurasi Lokal',
+    heroTitle: 'Menjelajah Aceh dengan tenang, rasa, dan makna.',
+    heroSubtitle:
+      'Kurasi destinasi pesisir, dataran tinggi Gayo, kuliner lokal, dan penginapan ramah Muslim lengkap dengan perencana perjalanan 1–5 hari.',
+    heroPrimaryCta: 'Jelajahi Destinasi',
+    heroSecondaryCta: 'Rancang Itinerary',
+    heroCaptionTitle: 'Masjid Raya Baiturrahman',
+    heroCaptionSub: 'Banda Aceh · Ikon sejarah & religi',
+    stat1Val: '05 Wilayah',
+    stat1Desc: 'Banda Aceh hingga Dataran Tinggi Gayo',
+    stat2Val: '12+ Lokasi',
+    stat2Desc: 'Religi, sejarah, bahari, dan pegunungan',
+    stat3Val: 'Ramah Muslim',
+    stat3Desc: 'Info fasilitas ibadah & status halal transparan',
+    stat4Val: '1–5 Hari',
+    stat4Desc: 'Kalkulator anggaran & itinerary siap cetak',
+    spotlightKicker: 'Tiga Lanskap Utama',
+    spotlightTitle: 'Dari serambi kota menuju bahari dan kabut pegunungan',
+    spotlightDesc:
+      'Pilih wilayah untuk langsung menyaring daftar destinasi sesuai karakter perjalanan Anda.',
+    spotlightSabangTitle: 'Bahari Pulau Weh & Iboih',
+    spotlightSabangDesc:
+      'Perairan jernih, terumbu karang, dan ritme pesisir Sabang yang tenang di ujung barat Nusantara.',
+    spotlightGayoTitle: 'Dataran Tinggi Gayo & Laut Tawar',
+    spotlightGayoDesc:
+      'Udara sejuk Takengon, kebun kopi arabika, dan lanskap danau di ketinggian Aceh Tengah.',
+    spotlightHeritageTitle: 'Warisan Banda Aceh',
+    spotlightHeritageDesc:
+      'Jejak sejarah, arsitektur Rumoh Aceh, dan kuliner khas dari pusat kota.',
+    spotlightAction: 'Lihat destinasi wilayah',
   },
   en: {
     navDest: 'Destinations',
@@ -432,8 +487,38 @@ export const TRANSLATIONS: Record<
     navFood: 'Food',
     navStay: 'Stays',
     navPlan: 'Trip Planner',
-    explore: 'Explore',
-    favButton: '♥ Favorites',
+    navDash: 'Dashboard',
+    explore: 'Plan Trip',
+    heroKicker: 'Aceh Travel Guide · Curated Local Directory',
+    heroTitle: 'Explore Aceh with calm, flavor, and purpose.',
+    heroSubtitle:
+      'Curated coastal escapes, Gayo highlands, local cuisine, and Muslim-friendly stays paired with a 1–5 day itinerary and budget planner.',
+    heroPrimaryCta: 'Explore Destinations',
+    heroSecondaryCta: 'Build Itinerary',
+    heroCaptionTitle: 'Baiturrahman Grand Mosque',
+    heroCaptionSub: 'Banda Aceh · Heritage & spiritual landmark',
+    stat1Val: '05 Regions',
+    stat1Desc: 'From Banda Aceh to Gayo Highlands',
+    stat2Val: '12+ Places',
+    stat2Desc: 'Heritage, coast, nature, and culture',
+    stat3Val: 'Muslim-Friendly',
+    stat3Desc: 'Transparent prayer & halal verification notes',
+    stat4Val: '1–5 Days',
+    stat4Desc: 'Budget estimator & printable itinerary',
+    spotlightKicker: 'Three Signature Landscapes',
+    spotlightTitle: 'From historic courtyards to reefs and misty highlands',
+    spotlightDesc:
+      'Select a region below to filter destinations by the pace and scenery you prefer.',
+    spotlightSabangTitle: 'Weh Island & Iboih Coast',
+    spotlightSabangDesc:
+      'Clear turquoise coves, coral reefs, and quiet coastal mornings in Sabang.',
+    spotlightGayoTitle: 'Gayo Highlands & Lake Laut Tawar',
+    spotlightGayoDesc:
+      'Cool Takengon mornings, arabica coffee slopes, and serene highland lake views.',
+    spotlightHeritageTitle: 'Banda Aceh Heritage',
+    spotlightHeritageDesc:
+      'Historic memorials, traditional Rumoh Aceh architecture, and iconic Acehnese cuisine.',
+    spotlightAction: 'Filter this region',
   },
 };
 

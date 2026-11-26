@@ -1,3 +1,4 @@
+import { ArrowRight, ArrowUpRight, Compass, Mountain, Waves } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AcehMapSection } from './components/AcehMapSection';
 import { DashboardSection } from './components/DashboardSection';
@@ -23,6 +24,10 @@ import type {
   TourismDatabase,
   TourPackage,
 } from './types/tourism';
+
+const HERO_IMAGE = '/src/assets/images/hero_aceh_panorama_1795663519489.jpg';
+const SABANG_IMAGE = '/src/assets/images/aceh_coast_sabang_1795663520301.jpg';
+const GAYO_IMAGE = '/src/assets/images/aceh_gayo_highlands_1795663520276.jpg';
 
 function loadFavorites(): FavoriteItem[] {
   try {
@@ -67,6 +72,10 @@ export default function App() {
 
   const [favSearch, setFavSearch] = useState('');
   const [favTypeFilter, setFavTypeFilter] = useState<'' | FavoritableType>('');
+
+  const [heroImgFailed, setHeroImgFailed] = useState(false);
+  const [sabangImgFailed, setSabangImgFailed] = useState(false);
+  const [gayoImgFailed, setGayoImgFailed] = useState(false);
 
   const [toastMsg, setToastMsg] = useState('');
   const toastTimerRef = useRef<number | null>(null);
@@ -236,91 +245,67 @@ export default function App() {
     });
   };
 
+  const handleFocusRegion = (regionName: string) => {
+    setRegionFilter(regionName);
+    setCategoryFilter('');
+    setSearch('');
+    const target = document.getElementById('destinasi');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+    showToast(`Filter wilayah: ${regionName}`);
+  };
+
   const t = TRANSLATIONS[lang];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="bg-[#064e3b] text-white text-[10px] sm:text-[12px] py-[7px] no-print">
-        <div className="w-[min(1160px,92%)] mx-auto flex justify-between gap-3">
-          <span>✦ Jelajahi Aceh bersama Pemuda Aceh</span>
-          <span>Data demo · Harga &amp; kontak simulasi</span>
-        </div>
-      </div>
-
-      <header className="sticky top-0 z-10 bg-[#ffffffed] backdrop-blur-[12px] border-b border-[#e1ebe5] no-print">
-        <div className="w-[min(1160px,92%)] mx-auto flex items-center justify-between min-h-[62px] sm:min-h-[72px] gap-[18px]">
+    <div className="min-h-screen flex flex-col bg-[#f8faf8] text-[#132a24]">
+      <header className="sticky top-0 z-20 bg-[#f8faf8]/95 backdrop-blur-md border-b border-[#dce6df] no-print">
+        <div className="w-[min(1200px,92%)] mx-auto flex items-center justify-between gap-8 h-16">
           <a
             href="#home"
-            className="flex items-center gap-[10px] no-underline font-extrabold text-[#064e3b] text-[15px] sm:text-[18px]"
+            className="font-display text-xl font-bold tracking-tight text-[#064e3b] no-underline whitespace-nowrap shrink-0"
           >
-            <span className="w-[39px] h-[39px] rounded-[13px] brand-mark grid place-items-center text-white text-[21px]">
-              ✺
-            </span>
-            Pemuda <span className="text-[#d6a84f]">Aceh</span>
+            Pemuda Aceh
           </a>
 
-          <nav className="hidden lg:flex gap-5 items-center">
+          <nav className="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-[#4a6158]">
             <a
               href="#destinasi"
-              className="no-underline text-[#47645b] font-semibold text-[13px] hover:text-[#2ab98e]"
+              className="no-underline hover:text-[#064e3b] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
               {t.navDest}
             </a>
             <a
               href="#favorit"
-              className="no-underline text-[#47645b] font-semibold text-[13px] hover:text-[#2ab98e] flex items-center gap-1"
+              className="no-underline hover:text-[#064e3b] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0 tabular-nums"
             >
-              <span>{t.navFav}</span>
-              <span className="inline-grid place-items-center min-w-[19px] h-[19px] px-[5px] rounded-full bg-[#e8f4ee] text-[#064e3b] text-[10px] font-black">
-                {resolvedFavorites.length}
-              </span>
+              {t.navFav} ({resolvedFavorites.length})
             </a>
             <a
               href="#kuliner"
-              className="no-underline text-[#47645b] font-semibold text-[13px] hover:text-[#2ab98e]"
+              className="no-underline hover:text-[#064e3b] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
               {t.navFood}
             </a>
             <a
               href="#akomodasi"
-              className="no-underline text-[#47645b] font-semibold text-[13px] hover:text-[#2ab98e]"
+              className="no-underline hover:text-[#064e3b] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
               {t.navStay}
             </a>
             <a
-              href="#planner"
-              className="no-underline text-[#47645b] font-semibold text-[13px] hover:text-[#2ab98e]"
-            >
-              {t.navPlan}
-            </a>
-            <a
               href="#dashboard"
-              className="no-underline text-[#47645b] font-semibold text-[13px] hover:text-[#2ab98e]"
+              className="no-underline hover:text-[#064e3b] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
-              Dashboard
+              {t.navDash}
             </a>
           </nav>
 
-          <div className="flex gap-2 items-center">
+          <div className="shrink-0">
             <a
-              href="#favorit"
-              aria-label="Lihat favorit"
-              className="border border-[#e1ebe5] bg-white text-[#064e3b] rounded-[12px] px-3 sm:px-4 py-[9px] sm:py-[11px] font-bold text-[13px] no-underline hover:brightness-95"
-            >
-              {t.favButton}
-            </a>
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value as Language)}
-              aria-label="Pilih bahasa"
-              className="border border-[#e1ebe5] bg-white rounded-[10px] px-[10px] py-2 text-[#064e3b] font-bold cursor-pointer"
-            >
-              <option value="id">ID</option>
-              <option value="en">EN</option>
-            </select>
-            <a
-              href="#destinasi"
-              className="border-0 rounded-[12px] px-3 sm:px-4 py-[9px] sm:py-[11px] bg-[#2ab98e] text-white font-bold text-[13px] no-underline btn-primary-shadow hover:brightness-95"
+              href="#planner"
+              className="inline-flex items-center justify-center rounded-lg px-4 py-2 bg-[#064e3b] text-white font-semibold text-xs no-underline btn-primary-shadow hover:bg-[#08634b] transition-colors whitespace-nowrap shrink-0"
             >
               {t.explore}
             </a>
@@ -329,118 +314,290 @@ export default function App() {
       </header>
 
       <main className="flex-1">
-        <section
-          id="home"
-          className="py-[38px] sm:py-[58px] sm:pb-[45px] hero-bg overflow-hidden no-print"
-        >
-          <div className="w-[min(1160px,92%)] mx-auto grid grid-cols-1 md:grid-cols-[1.08fr_0.92fr] gap-[35px] items-center">
-            <div>
-              <div className="text-[#2ab98e] font-extrabold uppercase tracking-[2px] text-[11px]">
-                Discover · Explore · Experience
-              </div>
-              <h1 className="text-[clamp(38px,5vw,62px)] leading-[1.05] tracking-[-2px] my-[13px] mb-[18px] text-[#064e3b] font-bold">
-                Temukan pesona Aceh,
-                <br />
-                <em className="not-italic text-[#19a7a0]">
-                  perjalanan penuh makna.
-                </em>
-              </h1>
-              <p className="max-w-[560px] text-[#587169] text-[17px]">
-                Rencanakan perjalanan yang nyaman dengan inspirasi destinasi,
-                kuliner lokal, akomodasi ramah Muslim, dan budaya Aceh yang
-                berkesan.
+        <section id="home" className="pt-8 pb-14 sm:pt-12 sm:pb-16 no-print">
+          <div className="w-[min(1200px,92%)] mx-auto">
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#dce6df]">
+              <p className="m-0 text-xs font-medium text-[#5a6f67]">
+                {t.heroKicker}
               </p>
-              <div className="flex gap-3 flex-wrap mt-6">
-                <a
-                  href="#destinasi"
-                  className="border-0 rounded-[12px] px-4 py-[11px] bg-[#2ab98e] text-white font-bold no-underline btn-primary-shadow hover:brightness-95"
+
+              <div
+                role="group"
+                aria-label="Pilih bahasa"
+                className="inline-flex items-center gap-1 p-1 bg-[#edf3ef] rounded-lg border border-[#dce6df]"
+              >
+                <button
+                  type="button"
+                  onClick={() => setLang('id')}
+                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors cursor-pointer whitespace-nowrap ${
+                    lang === 'id'
+                      ? 'bg-white text-[#064e3b] shadow-xs'
+                      : 'text-[#5a6f67] hover:text-[#132a24]'
+                  }`}
                 >
-                  Jelajahi Destinasi ↗
-                </a>
-                <a
-                  href="#planner"
-                  className="border-0 rounded-[12px] px-4 py-[11px] bg-[#e8f4ee] text-[#064e3b] font-bold no-underline hover:brightness-95"
+                  ID
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLang('en')}
+                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors cursor-pointer whitespace-nowrap ${
+                    lang === 'en'
+                      ? 'bg-white text-[#064e3b] shadow-xs'
+                      : 'text-[#5a6f67] hover:text-[#132a24]'
+                  }`}
                 >
-                  Susun Itinerary
-                </a>
+                  EN
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-[1.02fr_0.98fr] gap-8 lg:gap-12 pt-8 sm:pt-10 items-stretch">
+              <div className="flex flex-col justify-between py-1">
+                <div>
+                  <h1 className="font-display text-[clamp(2.3rem,4.1vw,3.75rem)] leading-[1.06] tracking-[-0.025em] text-[#064e3b] font-semibold m-0 text-balance max-w-[16ch]">
+                    {t.heroTitle}
+                  </h1>
+                  <p className="mt-5 mb-0 max-w-[54ch] text-[#4a6158] text-[16px] leading-[1.65]">
+                    {t.heroSubtitle}
+                  </p>
+                </div>
+
+                <div className="mt-8 flex flex-wrap items-center gap-5">
+                  <a
+                    href="#destinasi"
+                    className="inline-flex items-center gap-2 rounded-lg px-5 py-3 bg-[#064e3b] text-white font-semibold text-sm no-underline btn-primary-shadow hover:bg-[#08634b] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    <span>{t.heroPrimaryCta}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                  <a
+                    href="#planner"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#064e3b] no-underline hover:underline underline-offset-4 whitespace-nowrap shrink-0"
+                  >
+                    <span>{t.heroSecondaryCta}</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-8 max-w-[510px]">
-                <div className="border-l-2 border-[#d6a84f] pl-3">
-                  <b className="block text-[18px] sm:text-[21px] text-[#064e3b]">
-                    5 Wilayah
-                  </b>
-                  <span className="text-[12px] text-[#687b75]">
-                    Banda Aceh hingga Gayo
-                  </span>
-                </div>
-                <div className="border-l-2 border-[#d6a84f] pl-3">
-                  <b className="block text-[18px] sm:text-[21px] text-[#064e3b]">
-                    12+ Lokasi
-                  </b>
-                  <span className="text-[12px] text-[#687b75]">
-                    Contoh destinasi
-                  </span>
-                </div>
-                <div className="border-l-2 border-[#d6a84f] pl-3">
-                  <b className="block text-[18px] sm:text-[21px] text-[#064e3b]">
-                    1–5 Hari
-                  </b>
-                  <span className="text-[12px] text-[#687b75]">
-                    Perencana perjalanan
-                  </span>
+              <div className="relative rounded-2xl overflow-hidden min-h-[260px] sm:min-h-[340px] lg:h-full border border-[#dce6df] photo-gradient">
+                {!heroImgFailed ? (
+                  <img
+                    src={HERO_IMAGE}
+                    alt={t.heroCaptionTitle}
+                    referrerPolicy="no-referrer"
+                    onError={() => setHeroImgFailed(true)}
+                    className="w-full h-full object-cover block"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-[#064e3b] p-8">
+                    <Compass className="w-10 h-10 opacity-75" strokeWidth={1.5} />
+                    <span className="font-display text-xl font-semibold">
+                      {t.heroCaptionTitle}
+                    </span>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 text-white">
+                  <div className="font-display text-lg font-semibold leading-snug">
+                    {t.heroCaptionTitle}
+                  </div>
+                  <div className="text-xs text-white/85 mt-0.5">
+                    {t.heroCaptionSub}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="min-h-[220px] sm:min-h-[340px] relative rounded-[28px] hero-visual overflow-hidden grid place-items-center text-white">
-              <div className="absolute inset-0 opacity-[0.18] hero-visual-pattern" />
-              <div className="absolute border border-[#ffffff28] rounded-full w-[370px] h-[370px] pointer-events-none" />
-              <div className="absolute border border-[#ffffff28] rounded-full w-[270px] h-[270px] pointer-events-none" />
-              <div className="absolute z-[2] bg-[#ffffffed] text-[#064e3b] px-4 py-3 rounded-[15px] font-extrabold left-[18px] top-6 card-shadow">
-                🌿 Alam &amp; budaya
+            <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 border border-[#dce6df] rounded-xl bg-white divide-y lg:divide-y-0 lg:divide-x divide-[#dce6df]">
+              <div className="p-5">
+                <div className="font-display text-xl font-semibold text-[#064e3b] tabular-nums">
+                  {t.stat1Val}
+                </div>
+                <div className="text-xs text-[#5a6f67] mt-1 leading-relaxed">
+                  {t.stat1Desc}
+                </div>
               </div>
-              <div className="text-[75px] sm:text-[100px] z-[1] drop-shadow-[0_15px_12px_rgba(0,27,22,0.25)]">
-                🕌
+              <div className="p-5">
+                <div className="font-display text-xl font-semibold text-[#064e3b] tabular-nums">
+                  {t.stat2Val}
+                </div>
+                <div className="text-xs text-[#5a6f67] mt-1 leading-relaxed">
+                  {t.stat2Desc}
+                </div>
               </div>
-              <div className="absolute z-[2] bg-[#ffffffed] text-[#064e3b] px-4 py-3 rounded-[15px] font-extrabold right-[18px] bottom-[25px] card-shadow">
-                🌊 Dari kota ke bahari
+              <div className="p-5">
+                <div className="font-display text-xl font-semibold text-[#064e3b]">
+                  {t.stat3Val}
+                </div>
+                <div className="text-xs text-[#5a6f67] mt-1 leading-relaxed">
+                  {t.stat3Desc}
+                </div>
+              </div>
+              <div className="p-5">
+                <div className="font-display text-xl font-semibold text-[#064e3b] tabular-nums">
+                  {t.stat4Val}
+                </div>
+                <div className="text-xs text-[#5a6f67] mt-1 leading-relaxed">
+                  {t.stat4Desc}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="destinasi" className="py-[58px] no-print">
-          <div className="w-[min(1160px,92%)] mx-auto">
+        <section className="py-14 bg-[#f1f6f3] border-y border-[#dce6df] no-print">
+          <div className="w-[min(1200px,92%)] mx-auto">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+              <div>
+                <div className="text-[#0d8a68] font-semibold text-xs tracking-wide">
+                  {t.spotlightKicker}
+                </div>
+                <h2 className="font-display text-[clamp(24px,2.8vw,34px)] leading-[1.15] mt-1.5 mb-2 text-[#064e3b] tracking-[-0.02em] font-semibold max-w-[26ch]">
+                  {t.spotlightTitle}
+                </h2>
+                <p className="text-[#5a6f67] m-0 max-w-[540px] text-[15px]">
+                  {t.spotlightDesc}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+              <button
+                type="button"
+                onClick={() => handleFocusRegion('Sabang')}
+                className="lg:col-span-5 group text-left rounded-xl overflow-hidden border border-[#dce6df] bg-white cursor-pointer p-0 flex flex-col card-shadow transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                <div className="aspect-[4/3] w-full photo-gradient overflow-hidden relative">
+                  {!sabangImgFailed ? (
+                    <img
+                      src={SABANG_IMAGE}
+                      alt={t.spotlightSabangTitle}
+                      referrerPolicy="no-referrer"
+                      onError={() => setSabangImgFailed(true)}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[#064e3b]">
+                      <Waves className="w-9 h-9 opacity-75" strokeWidth={1.5} />
+                    </div>
+                  )}
+                </div>
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="text-xs font-medium text-[#5a6f67]">
+                      01 · Sabang
+                    </div>
+                    <h3 className="font-display text-lg font-semibold text-[#064e3b] mt-1 mb-1.5">
+                      {t.spotlightSabangTitle}
+                    </h3>
+                    <p className="text-xs text-[#4a6158] leading-relaxed m-0">
+                      {t.spotlightSabangDesc}
+                    </p>
+                  </div>
+                  <div className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#064e3b]">
+                    <span>{t.spotlightAction}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleFocusRegion('Aceh Tengah')}
+                className="lg:col-span-4 group text-left rounded-xl overflow-hidden border border-[#dce6df] bg-white cursor-pointer p-0 flex flex-col card-shadow transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                <div className="aspect-[4/3] w-full photo-gradient overflow-hidden relative">
+                  {!gayoImgFailed ? (
+                    <img
+                      src={GAYO_IMAGE}
+                      alt={t.spotlightGayoTitle}
+                      referrerPolicy="no-referrer"
+                      onError={() => setGayoImgFailed(true)}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-[#064e3b]">
+                      <Mountain className="w-9 h-9 opacity-75" strokeWidth={1.5} />
+                    </div>
+                  )}
+                </div>
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="text-xs font-medium text-[#5a6f67]">
+                      02 · Aceh Tengah
+                    </div>
+                    <h3 className="font-display text-lg font-semibold text-[#064e3b] mt-1 mb-1.5">
+                      {t.spotlightGayoTitle}
+                    </h3>
+                    <p className="text-xs text-[#4a6158] leading-relaxed m-0">
+                      {t.spotlightGayoDesc}
+                    </p>
+                  </div>
+                  <div className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#064e3b]">
+                    <span>{t.spotlightAction}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleFocusRegion('Banda Aceh')}
+                className="lg:col-span-3 text-left rounded-xl border border-[#064e3b] bg-[#064e3b] text-white cursor-pointer p-6 flex flex-col justify-between card-shadow transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                <div>
+                  <div className="text-xs font-medium text-emerald-100/80">
+                    03 · Banda Aceh
+                  </div>
+                  <h3 className="font-display text-xl font-semibold text-white mt-2 mb-3 leading-snug">
+                    {t.spotlightHeritageTitle}
+                  </h3>
+                  <p className="text-xs text-emerald-50/85 leading-relaxed m-0">
+                    {t.spotlightHeritageDesc}
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-white/15 mt-6 flex items-center justify-between text-xs font-semibold text-white">
+                  <span>{t.spotlightAction}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="destinasi" className="py-16 no-print">
+          <div className="w-[min(1200px,92%)] mx-auto">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-6">
               <div>
-                <div className="text-[#2ab98e] font-extrabold uppercase tracking-[2px] text-[11px]">
-                  Explore Aceh
+                <div className="text-[#0d8a68] font-semibold text-xs tracking-wide">
+                  Jelajah Lokasi
                 </div>
-                <h2 className="text-[clamp(25px,3vw,34px)] leading-[1.1] my-[6px] text-[#064e3b] tracking-[-0.8px] font-bold">
+                <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#064e3b] tracking-[-0.02em] font-semibold">
                   Destinasi pilihan
                 </h2>
-                <p className="text-[#687b75] m-0 max-w-[530px]">
+                <p className="text-[#5a6f67] m-0 max-w-[540px] text-[15px]">
                   Inspirasi perjalanan dari pesisir, pegunungan, sejarah, hingga
                   wisata religi.
                 </p>
               </div>
-              <span className="inline-flex rounded-full bg-[#e9f5ef] text-[#064e3b] px-[9px] py-1 text-[10px] font-extrabold self-start sm:self-auto">
-                {db.destinations.length} destinasi contoh
-              </span>
+              <div className="text-xs font-medium text-[#5a6f67] tabular-nums">
+                {filteredDestinations.length} dari {db.destinations.length} destinasi contoh
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-[10px] my-[18px]">
+            <div className="grid grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] gap-3 my-5">
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Cari destinasi atau kata kunci…"
-                className="col-span-2 lg:col-span-1 w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none focus:border-[#19a7a0]"
+                className="col-span-2 lg:col-span-1 w-full px-3.5 py-2.5 border border-[#dce6df] rounded-lg bg-white text-[#132a24] text-sm outline-none focus:border-[#0d8a68]"
               />
               <select
                 value={regionFilter}
                 onChange={(e) => setRegionFilter(e.target.value)}
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className="w-full px-3.5 py-2.5 border border-[#dce6df] rounded-lg bg-white text-[#132a24] text-sm outline-none focus:border-[#0d8a68]"
               >
                 <option value="">Semua wilayah</option>
                 {regions.map((r) => (
@@ -452,7 +609,7 @@ export default function App() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className="w-full px-3.5 py-2.5 border border-[#dce6df] rounded-lg bg-white text-[#132a24] text-sm outline-none focus:border-[#0d8a68]"
               >
                 <option value="">Semua kategori</option>
                 {categories.map((c) => (
@@ -466,7 +623,7 @@ export default function App() {
                 onChange={(e) =>
                   setSortBy(e.target.value as 'featured' | 'name' | 'cost')
                 }
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className="w-full px-3.5 py-2.5 border border-[#dce6df] rounded-lg bg-white text-[#132a24] text-sm outline-none focus:border-[#0d8a68]"
               >
                 <option value="featured">Urutkan: Unggulan</option>
                 <option value="name">Nama A–Z</option>
@@ -474,12 +631,27 @@ export default function App() {
               </select>
             </div>
 
-            <p className="text-[12px] text-[#687b75] mt-0 mb-[15px]">
-              Gunakan pencarian, filter wilayah/kategori, dan sorting untuk
-              menemukan tempat yang sesuai.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
+              <p className="text-xs text-[#5a6f67] m-0">
+                Gunakan pencarian, filter wilayah/kategori, dan sorting untuk
+                menemukan tempat yang sesuai.
+              </p>
+              {(search || regionFilter || categoryFilter) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearch('');
+                    setRegionFilter('');
+                    setCategoryFilter('');
+                  }}
+                  className="text-xs font-semibold text-[#064e3b] hover:underline bg-transparent border-0 p-0 cursor-pointer"
+                >
+                  Reset filter
+                </button>
+              )}
+            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {filteredDestinations.length > 0 ? (
                 filteredDestinations.map((dest) => (
                   <ItemCard
@@ -492,47 +664,47 @@ export default function App() {
                   />
                 ))
               ) : (
-                <div className="col-span-full p-7 text-center text-[#687b75] bg-[#f7faf8] rounded-[14px]">
-                  Tidak ada destinasi yang cocok.
+                <div className="col-span-full p-8 text-center text-[#5a6f67] bg-white border border-[#dce6df] rounded-xl">
+                  Tidak ada destinasi yang cocok dengan filter saat ini.
                 </div>
               )}
             </div>
           </div>
         </section>
 
-        <section id="favorit" className="bg-[#f2f8f4] py-[58px] no-print">
-          <div className="w-[min(1160px,92%)] mx-auto">
+        <section id="favorit" className="bg-[#f1f6f3] border-t border-[#e5ede8] py-16 no-print">
+          <div className="w-[min(1200px,92%)] mx-auto">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-6">
               <div>
-                <div className="text-[#2ab98e] font-extrabold uppercase tracking-[2px] text-[11px]">
-                  Saved for later
+                <div className="text-[#0d8a68] font-semibold text-xs tracking-wide">
+                  Simpanan Pribadi
                 </div>
-                <h2 className="text-[clamp(25px,3vw,34px)] leading-[1.1] my-[6px] text-[#064e3b] tracking-[-0.8px] font-bold">
+                <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#064e3b] tracking-[-0.02em] font-semibold">
                   Favorit saya
                 </h2>
-                <p className="text-[#687b75] m-0 max-w-[530px]">
+                <p className="text-[#5a6f67] m-0 max-w-[540px] text-[15px]">
                   Destinasi, kuliner, dan akomodasi yang Anda simpan di browser
                   ini.
                 </p>
               </div>
-              <span className="inline-flex rounded-full bg-[#e9f5ef] text-[#064e3b] px-[9px] py-1 text-[10px] font-extrabold self-start sm:self-auto">
-                {filteredFavorites.length} item
-              </span>
+              <div className="text-xs font-medium text-[#5a6f67] tabular-nums">
+                {filteredFavorites.length} item tersimpan
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px] my-[18px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5">
               <input
                 value={favSearch}
                 onChange={(e) => setFavSearch(e.target.value)}
                 placeholder="Cari favorit…"
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className="w-full px-3.5 py-2.5 border border-[#dce6df] rounded-lg bg-white text-[#132a24] text-sm outline-none focus:border-[#0d8a68]"
               />
               <select
                 value={favTypeFilter}
                 onChange={(e) =>
                   setFavTypeFilter(e.target.value as '' | FavoritableType)
                 }
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className="w-full px-3.5 py-2.5 border border-[#dce6df] rounded-lg bg-white text-[#132a24] text-sm outline-none focus:border-[#0d8a68]"
               >
                 <option value="">Semua jenis</option>
                 <option value="destinations">Destinasi</option>
@@ -541,7 +713,7 @@ export default function App() {
               </select>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {filteredFavorites.length > 0 ? (
                 filteredFavorites.map(({ item, type }) => (
                   <ItemCard
@@ -555,8 +727,8 @@ export default function App() {
                   />
                 ))
               ) : (
-                <div className="col-span-full p-7 text-center text-[#687b75] bg-[#f7faf8] rounded-[14px]">
-                  Belum ada favorit yang cocok. Klik ♡ pada kartu untuk
+                <div className="col-span-full p-8 text-center text-[#5a6f67] bg-white border border-[#dce6df] rounded-xl">
+                  Belum ada favorit yang cocok. Klik tombol hati pada kartu untuk
                   menyimpan item.
                 </div>
               )}
@@ -568,24 +740,27 @@ export default function App() {
           <AcehMapSection regions={regions} />
         </div>
 
-        <section id="kuliner" className="bg-[#f0f7f2] py-[58px] no-print">
-          <div className="w-[min(1160px,92%)] mx-auto">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-6">
+        <section id="kuliner" className="bg-[#f1f6f3] border-y border-[#e5ede8] py-16 no-print">
+          <div className="w-[min(1200px,92%)] mx-auto">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-7">
               <div>
-                <div className="text-[#2ab98e] font-extrabold uppercase tracking-[2px] text-[11px]">
-                  Local taste
+                <div className="text-[#0d8a68] font-semibold text-xs tracking-wide">
+                  Cita Rasa Lokal
                 </div>
-                <h2 className="text-[clamp(25px,3vw,34px)] leading-[1.1] my-[6px] text-[#064e3b] tracking-[-0.8px] font-bold">
+                <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#064e3b] tracking-[-0.02em] font-semibold">
                   Kuliner &amp; UMKM lokal
                 </h2>
-                <p className="text-[#687b75] m-0 max-w-[530px]">
+                <p className="text-[#5a6f67] m-0 max-w-[540px] text-[15px]">
                   Kenali cita rasa Aceh dan dukung usaha lokal. Status halal
-                  ditampilkan secara hati-hati.
+                  ditampilkan secara transparan.
                 </p>
+              </div>
+              <div className="text-xs font-medium text-[#5a6f67] tabular-nums">
+                {db.foods.length} pilihan kuliner
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {db.foods.map((food) => (
                 <ItemCard
                   key={food.id}
@@ -600,24 +775,27 @@ export default function App() {
           </div>
         </section>
 
-        <section id="akomodasi" className="py-[58px] no-print">
-          <div className="w-[min(1160px,92%)] mx-auto">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-6">
+        <section id="akomodasi" className="py-16 no-print">
+          <div className="w-[min(1200px,92%)] mx-auto">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-7">
               <div>
-                <div className="text-[#2ab98e] font-extrabold uppercase tracking-[2px] text-[11px]">
-                  Stay with comfort
+                <div className="text-[#0d8a68] font-semibold text-xs tracking-wide">
+                  Kenyamanan Menginap
                 </div>
-                <h2 className="text-[clamp(25px,3vw,34px)] leading-[1.1] my-[6px] text-[#064e3b] tracking-[-0.8px] font-bold">
+                <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#064e3b] tracking-[-0.02em] font-semibold">
                   Akomodasi ramah Muslim
                 </h2>
-                <p className="text-[#687b75] m-0 max-w-[530px]">
+                <p className="text-[#5a6f67] m-0 max-w-[540px] text-[15px]">
                   Contoh fasilitas yang dapat membantu kenyamanan wisatawan
                   Muslim.
                 </p>
               </div>
+              <div className="text-xs font-medium text-[#5a6f67] tabular-nums">
+                {db.stays.length} pilihan akomodasi
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {db.stays.map((stay) => (
                 <ItemCard
                   key={stay.id}
@@ -650,24 +828,43 @@ export default function App() {
         />
       </main>
 
-      <footer className="bg-[#073d32] text-[#d5e9df] py-[35px] no-print">
-        <div className="w-[min(1160px,92%)] mx-auto flex flex-col sm:flex-row justify-between gap-[25px] sm:items-center">
+      <footer className="bg-[#06382c] text-[#d5e9df] py-10 no-print border-t border-[#0c4f3e]">
+        <div className="w-[min(1200px,92%)] mx-auto flex flex-col md:flex-row justify-between gap-6 md:items-center">
           <div>
-            <b className="text-[19px]">Pemuda Aceh ✺</b>
-            <p className="my-[5px] mb-0">
-              Temukan Aceh, ciptakan pengalaman yang bermakna.
+            <span className="font-display text-lg font-semibold text-white">
+              Pemuda Aceh
+            </span>
+            <p className="mt-1 mb-0 text-xs text-[#b2d1c4]">
+              Temukan Aceh, ciptakan pengalaman perjalanan yang bermakna.
             </p>
           </div>
-          <small className="text-[#a7c7b8]">
-            Prototype MVP · Tanpa backend · Data contoh perlu verifikasi
-          </small>
+          <div className="flex flex-wrap items-center gap-5 text-xs text-[#b2d1c4]">
+            <a href="#destinasi" className="text-[#d5e9df] no-underline hover:underline">
+              {t.navDest}
+            </a>
+            <a href="#kuliner" className="text-[#d5e9df] no-underline hover:underline">
+              {t.navFood}
+            </a>
+            <a href="#akomodasi" className="text-[#d5e9df] no-underline hover:underline">
+              {t.navStay}
+            </a>
+            <a href="#planner" className="text-[#d5e9df] no-underline hover:underline">
+              {t.navPlan}
+            </a>
+            <a href="#dashboard" className="text-[#d5e9df] no-underline hover:underline">
+              {t.navDash}
+            </a>
+            <span className="text-[#8fb7a6]">
+              Data contoh lokal · Harga &amp; kontak simulasi
+            </span>
+          </div>
         </div>
       </footer>
 
       {toastMsg && (
         <div
           role="status"
-          className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#123e32] text-white px-[17px] py-[11px] rounded-[12px] card-shadow z-30 no-print"
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#064e3b] text-white px-4 py-2.5 rounded-lg text-sm font-medium card-shadow z-30 no-print"
         >
           {toastMsg}
         </div>

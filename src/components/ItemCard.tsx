@@ -1,3 +1,4 @@
+import { BedDouble, Heart, MapPin, Utensils } from 'lucide-react';
 import { useState } from 'react';
 import { rupiah, safeUrl } from '../data/seed';
 import type {
@@ -15,15 +16,6 @@ interface ItemCardProps {
   onToggleFavorite: (type: FavoritableType, id: string) => void;
   onShowDetail: (type: FavoritableType, id: string) => void;
 }
-
-const DEST_SYMBOLS: Record<string, string> = {
-  religi: '🕌',
-  sejarah: '🏛️',
-  alam: '🌿',
-  bahari: '🌊',
-  budaya: '🏡',
-  kuliner: '🍜',
-};
 
 export function ItemCard({
   item,
@@ -48,100 +40,119 @@ export function ItemCard({
       ? food.harga
       : stay?.hargaPerMalam || 0;
   const cat = dest ? dest.kategori : food ? food.kategori : 'Akomodasi';
-  const symbol = isDest ? DEST_SYMBOLS[cat] || '📍' : isFood ? '🍲' : '🛏️';
   const validImg = !imgFailed ? safeUrl(item.imageUrl) : '';
 
+  const FallbackIcon = isDest ? MapPin : isFood ? Utensils : BedDouble;
+
   return (
-    <article className="bg-white border border-[#e1ebe5] rounded-[18px] overflow-hidden card-shadow transition-transform duration-200 hover:-translate-y-[3px]">
-      <div className="h-[170px] photo-gradient grid place-items-center text-[54px] relative">
+    <article className="bg-white border border-[#dce6df] rounded-xl overflow-hidden card-shadow transition-transform duration-200 hover:-translate-y-0.5 flex flex-col">
+      <div className="aspect-[4/3] photo-gradient relative overflow-hidden">
         {validImg ? (
           <img
             src={validImg}
             alt={item.nama}
+            referrerPolicy="no-referrer"
             onError={() => setImgFailed(true)}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="w-full h-full object-cover"
           />
         ) : (
-          <span>{symbol}</span>
+          <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-[#064e3b] px-4 text-center">
+            <FallbackIcon className="w-7 h-7 opacity-75" strokeWidth={1.6} />
+            <span className="text-xs font-medium opacity-80 line-clamp-1">
+              {item.nama}
+            </span>
+          </div>
         )}
-        <small className="absolute bottom-[10px] left-[12px] z-[2] bg-[#ffffffdf] rounded-full px-[9px] py-[5px] text-[10px] font-extrabold text-[#064e3b]">
-          {loc}
-        </small>
       </div>
 
-      <div className="p-4">
-        <div className="flex justify-between gap-[6px] items-center">
-          {food ? (
-            <span
-              className={`inline-flex rounded-full px-[9px] py-1 text-[10px] font-extrabold ${
-                food.statusSertifikasiHalal === 'Terverifikasi'
-                  ? 'bg-[#e9f5ef] text-[#064e3b]'
-                  : 'bg-[#fff0e9] text-[#9a4c22]'
-              }`}
-            >
-              {food.statusSertifikasiHalal}
-            </span>
-          ) : dest ? (
-            <span className="inline-flex rounded-full bg-[#e9f5ef] text-[#064e3b] px-[9px] py-1 text-[10px] font-extrabold">
-              {cat}
-            </span>
-          ) : (
-            <span className="inline-flex rounded-full bg-[#e9f5ef] text-[#064e3b] px-[9px] py-1 text-[10px] font-extrabold">
-              Ramah Muslim: fasilitas
-            </span>
-          )}
+      <div className="p-5 flex-1 flex flex-col">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="text-xs text-[#5a6f67] flex items-center gap-1.5 min-w-0 truncate">
+            {food ? (
+              <span
+                className={
+                  food.statusSertifikasiHalal === 'Terverifikasi'
+                    ? 'font-semibold text-[#064e3b]'
+                    : 'font-medium text-[#8a4520]'
+                }
+              >
+                Halal: {food.statusSertifikasiHalal}
+              </span>
+            ) : dest ? (
+              <span className="capitalize font-medium text-[#064e3b]">
+                {cat}
+              </span>
+            ) : (
+              <span className="font-medium text-[#064e3b]">
+                Ramah Muslim
+              </span>
+            )}
+            {loc && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span className="truncate">{loc}</span>
+              </>
+            )}
+          </div>
 
           {mode === 'favorite' ? (
             <button
               type="button"
               onClick={() => onToggleFavorite(type, item.id)}
               aria-label="Hapus dari favorit"
-              className="border border-[#f4c8c8] bg-[#fff0ee] text-[#c43d48] rounded-[10px] px-[10px] py-2 cursor-pointer text-[13px] font-semibold"
+              className="shrink-0 inline-flex items-center gap-1.5 border border-[#f0c7c7] bg-[#fff5f5] text-[#b4343e] rounded-lg px-3 py-1.5 text-xs font-semibold cursor-pointer hover:bg-[#feeceb] transition-colors whitespace-nowrap"
             >
-              ♥ Hapus
+              <Heart className="w-3.5 h-3.5 fill-current" />
+              <span>Hapus</span>
             </button>
           ) : (
             <button
               type="button"
               onClick={() => onToggleFavorite(type, item.id)}
-              aria-label="Favorit"
-              className={`border rounded-[10px] px-[10px] py-2 cursor-pointer text-[14px] ${
+              aria-label={isFavorite ? 'Hapus dari favorit' : 'Simpan ke favorit'}
+              className={`shrink-0 w-9 h-9 inline-grid place-items-center border rounded-lg cursor-pointer transition-colors ${
                 isFavorite
-                  ? 'bg-[#fff0ee] text-[#c43d48] border-[#f4c8c8]'
-                  : 'bg-white text-[#064e3b] border-[#e1ebe5]'
+                  ? 'bg-[#fff5f5] text-[#b4343e] border-[#f0c7c7]'
+                  : 'bg-white text-[#48635a] border-[#dce6df] hover:text-[#064e3b] hover:border-[#b5ccc0]'
               }`}
             >
-              {isFavorite ? '♥' : '♡'}
+              <Heart
+                className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`}
+                strokeWidth={1.8}
+              />
             </button>
           )}
         </div>
 
-        <h3 className="mt-2 mb-[5px] text-[18px] font-bold text-[#064e3b]">
+        <h3 className="text-[17px] leading-snug font-bold text-[#132a24] m-0">
           {item.nama}
         </h3>
-        <div className="text-[#687b75] text-[12px]">
+        <div className="text-xs text-[#5a6f67] mt-1">
           {dest ? dest.alamat || loc : loc}
         </div>
-        <p className="text-[#5c7169] text-[13px] my-[10px] mb-[14px]">
+
+        <p className="text-[13.5px] leading-relaxed text-[#4b625a] mt-3 mb-5 flex-1">
           {dest?.deskripsi ||
             food?.catatan ||
             stay?.catatan ||
             'Informasi contoh; konfirmasi langsung kepada penyedia.'}
         </p>
 
-        <div className="flex justify-between items-center gap-2">
-          <span className="font-[850] text-[#064e3b] text-[13px]">
-            {rupiah(price)}{' '}
-            <small className="text-[11px] font-normal text-[#687b75]">
+        <div className="pt-3.5 border-t border-[#ebf1ed] flex justify-between items-center gap-3">
+          <div className="tabular-nums">
+            <span className="font-bold text-[#064e3b] text-sm">
+              {rupiah(price)}
+            </span>
+            <span className="text-[11px] text-[#5a6f67] ml-1.5">
               simulasi
-            </small>
-          </span>
+            </span>
+          </div>
           <button
             type="button"
             onClick={() => onShowDetail(type, item.id)}
-            className="border-0 rounded-[12px] px-4 py-[11px] bg-[#e8f4ee] text-[#064e3b] font-bold text-[14px] hover:brightness-95 cursor-pointer"
+            className="border border-[#dce6df] rounded-lg px-4 py-2 bg-[#f3f8f5] text-[#064e3b] font-semibold text-xs hover:bg-[#e6f1eb] transition-colors cursor-pointer whitespace-nowrap shrink-0"
           >
-            Detail
+            Lihat detail
           </button>
         </div>
       </div>
