@@ -1,3 +1,5 @@
+import { Compass, Copy, Download, Plus, Printer, Trash2 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 import { rupiah, safeUrl } from '../data/seed';
 import type {
@@ -217,30 +219,46 @@ export function PlannerSection({
     onToast('Paket dimasukkan ke itinerary');
   };
 
+  const inputClass =
+    'w-full px-3.5 py-2.5 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] placeholder-[#728c81] text-sm outline-none focus:border-[#24b486] transition-colors';
+
   return (
     <>
-      <section id="planner" className="bg-[#edf6f1] py-[58px] no-print">
-        <div className="w-[min(1160px,92%)] mx-auto">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-6">
-            <div>
-              <div className="text-[#2ab98e] font-extrabold uppercase tracking-[2px] text-[11px]">
-                Plan your journey
-              </div>
-              <h2 className="text-[clamp(25px,3vw,34px)] leading-[1.1] my-[6px] text-[#064e3b] tracking-[-0.8px] font-bold">
-                Rancang perjalanan
-              </h2>
-              <p className="text-[#687b75] m-0 max-w-[530px]">
-                Susun aktivitas 1–5 hari dan hitung anggaran awal perjalanan.
-              </p>
+      <section
+        id="planner"
+        className="bg-[#0b1814] border-y border-[#152822] py-16 no-print"
+      >
+        <div className="w-[min(1200px,92%)] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-7"
+          >
+            <div className="text-[#3ad19e] font-semibold text-xs tracking-wide">
+              Perencana Perjalanan
             </div>
-          </div>
+            <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#ecf5f1] tracking-[-0.015em] font-semibold">
+              Rancang perjalanan
+            </h2>
+            <p className="text-[#97b0a5] m-0 max-w-[540px] text-[15px]">
+              Susun aktivitas 1–5 hari dan hitung anggaran awal perjalanan.
+            </p>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="bg-white border border-[#e1ebe5] rounded-[18px] p-5 card-shadow">
-              <h3 className="mt-0 mb-[14px] text-[#064e3b] font-bold text-lg">
-                ✦ Itinerary planner
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow"
+            >
+              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
+                Penyusun itinerary
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <input
                   value={itinerary.namaPerjalanan}
                   onChange={(e) =>
@@ -250,7 +268,7 @@ export function PlannerSection({
                     )
                   }
                   placeholder="Nama perjalanan"
-                  className="sm:col-span-2 w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none focus:border-[#19a7a0]"
+                  className={`sm:col-span-2 ${inputClass}`}
                 />
                 <input
                   type="date"
@@ -261,7 +279,7 @@ export function PlannerSection({
                       true
                     )
                   }
-                  className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none focus:border-[#19a7a0]"
+                  className={inputClass}
                 />
                 <select
                   value={itinerary.jumlahHari}
@@ -278,7 +296,7 @@ export function PlannerSection({
                       true
                     );
                   }}
-                  className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none focus:border-[#19a7a0]"
+                  className={inputClass}
                 >
                   {[1, 2, 3, 4, 5].map((d) => (
                     <option key={d} value={d}>
@@ -304,12 +322,12 @@ export function PlannerSection({
                     )
                   }
                   placeholder="Jumlah wisatawan"
-                  className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none focus:border-[#19a7a0]"
+                  className={inputClass}
                 />
                 <select
                   value={activePlaceId}
                   onChange={(e) => setSelectedPlace(e.target.value)}
-                  className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none focus:border-[#19a7a0]"
+                  className={inputClass}
                 >
                   {destinations.map((d) => (
                     <option key={d.id} value={d.id}>
@@ -320,7 +338,7 @@ export function PlannerSection({
                 <select
                   value={activityDay}
                   onChange={(e) => setActivityDay(Number(e.target.value))}
-                  className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none focus:border-[#19a7a0]"
+                  className={inputClass}
                 >
                   {[1, 2, 3, 4, 5].map((d) => (
                     <option key={d} value={d}>
@@ -328,51 +346,59 @@ export function PlannerSection({
                     </option>
                   ))}
                 </select>
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.98 }}
                   onClick={handleAddActivity}
-                  className="sm:col-span-2 border-0 rounded-[12px] px-4 py-[11px] bg-[#2ab98e] text-white font-bold btn-primary-shadow hover:brightness-95 cursor-pointer"
+                  className="sm:col-span-2 inline-flex items-center justify-center gap-1.5 border-0 rounded-lg px-4 py-2.5 bg-[#24b486] text-[#041b14] text-xs font-semibold btn-primary-shadow hover:bg-[#2ec493] transition-colors cursor-pointer"
                 >
-                  + Tambah ke itinerary
-                </button>
+                  <Plus className="w-4 h-4" />
+                  <span>Tambah ke itinerary</span>
+                </motion.button>
               </div>
 
-              <div className="grid gap-[10px] mt-[15px]">
+              <div className="grid gap-3 mt-5">
                 {Array.from({ length: days }, (_, idx) => idx + 1).map((d) => {
                   const acts = itinerary.daftarAktivitas.filter(
                     (a) => a.hari === d
                   );
                   return (
-                    <div key={d} className="grid gap-[6px]">
-                      <b className="text-[#064e3b]">Hari {d}</b>
+                    <div key={d} className="grid gap-1.5">
+                      <b className="text-xs font-semibold text-[#3ad19e]">
+                        Hari {d}
+                      </b>
                       {acts.length > 0 ? (
                         acts.map((a) => {
                           const dest = destinations.find(
                             (z) => z.id === a.itemId
                           );
                           return (
-                            <div
+                            <motion.div
                               key={a.id}
-                              className="flex justify-between gap-[10px] items-center bg-[#f6faf7] rounded-[11px] px-3 py-[10px]"
+                              initial={{ opacity: 0, x: -6 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="flex justify-between gap-2.5 items-center bg-[#091411] border border-[#1a2f28] rounded-lg px-3 py-2.5"
                             >
-                              <strong className="text-[13px]">
+                              <strong className="text-[13px] font-medium text-[#ecf5f1]">
                                 {dest?.nama || 'Item dihapus'}
                               </strong>
-                              <span className="flex items-center gap-2 text-[13px]">
+                              <span className="flex items-center gap-2.5 text-[13px] tabular-nums text-[#b2c7be]">
                                 {rupiah(dest?.estimasiBiaya || 0)}
                                 <button
                                   type="button"
+                                  aria-label="Hapus aktivitas"
                                   onClick={() => handleRemoveActivity(a.id)}
-                                  className="border border-[#e1ebe5] bg-white rounded-[10px] px-[10px] py-[6px] text-[#064e3b] cursor-pointer"
+                                  className="border border-[#1d352d] bg-[#0f1f1a] hover:border-[#52272c] hover:text-[#f28b94] rounded-md w-7 h-7 inline-grid place-items-center text-[#97b0a5] cursor-pointer transition-colors"
                                 >
-                                  ✕
+                                  <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </span>
-                            </div>
+                            </motion.div>
                           );
                         })
                       ) : (
-                        <div className="text-[11px] text-[#687b75]">
+                        <div className="text-xs text-[#728c81]">
                           Belum ada aktivitas.
                         </div>
                       )}
@@ -381,53 +407,66 @@ export function PlannerSection({
                 })}
               </div>
 
-              <button
-                type="button"
-                onClick={() => {
-                  onUpdateItinerary({ ...itinerary, totalAnggaran: grandTotal }, true);
-                  onToast('Itinerary tersimpan di browser');
-                }}
-                className="mt-3 border-0 rounded-[12px] px-4 py-[11px] bg-[#e8f4ee] text-[#064e3b] font-bold hover:brightness-95 cursor-pointer"
-              >
-                Simpan itinerary
-              </button>
-
-              <div className="flex gap-2 flex-wrap mt-3">
+              <div className="flex gap-2 flex-wrap mt-5 pt-4 border-t border-[#182c25]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onUpdateItinerary(
+                      { ...itinerary, totalAnggaran: grandTotal },
+                      true
+                    );
+                    onToast('Itinerary tersimpan di browser');
+                  }}
+                  className="border border-[#244237] rounded-lg px-4 py-2 bg-[#142a23] text-[#d9f0e7] text-xs font-semibold hover:bg-[#1b382f] transition-colors cursor-pointer whitespace-nowrap"
+                >
+                  Simpan itinerary
+                </button>
                 <button
                   type="button"
                   onClick={handleDownloadJson}
-                  className="border border-[#e1ebe5] bg-white text-[#064e3b] rounded-[12px] px-4 py-[11px] font-bold hover:brightness-95 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 border border-[#1d352d] bg-[#091411] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer whitespace-nowrap"
                 >
-                  ↓ Unduh JSON
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Unduh JSON</span>
                 </button>
                 <button
                   type="button"
                   onClick={handleCopySummary}
-                  className="border-0 rounded-[12px] px-4 py-[11px] bg-[#e8f4ee] text-[#064e3b] font-bold hover:brightness-95 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 border border-[#1d352d] bg-[#091411] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer whitespace-nowrap"
                 >
-                  ⧉ Salin ringkasan
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Salin ringkasan</span>
                 </button>
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="border-0 rounded-[12px] px-4 py-[11px] bg-[#e8f4ee] text-[#064e3b] font-bold hover:brightness-95 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 border border-[#1d352d] bg-[#091411] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer whitespace-nowrap"
                 >
-                  ⎙ Cetak rencana
+                  <Printer className="w-3.5 h-3.5" />
+                  <span>Cetak rencana</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white border border-[#e1ebe5] rounded-[18px] p-5 card-shadow">
-              <h3 className="mt-0 mb-[14px] text-[#064e3b] font-bold text-lg">
-                ◈ Kalkulator anggaran
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.4, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow"
+            >
+              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
+                Kalkulator anggaran
               </h3>
-              <div className="grid gap-[10px]">
-                <div className="flex justify-between gap-3 items-center border-b border-[#edf2ee] py-[10px]">
-                  <span>Biaya destinasi (sesuai aktivitas)</span>
-                  <b>{rupiah(destCost)}</b>
+              <div className="grid gap-1 text-sm">
+                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
+                  <span className="text-[#b2c7be]">
+                    Biaya destinasi (sesuai aktivitas)
+                  </span>
+                  <b className="tabular-nums text-[#ecf5f1]">{rupiah(destCost)}</b>
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#edf2ee] py-[10px]">
-                  <label htmlFor="mealCost">
+                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
+                  <label htmlFor="mealCost" className="text-[#b2c7be]">
                     Anggaran makan / orang / hari
                   </label>
                   <input
@@ -436,60 +475,64 @@ export function PlannerSection({
                     min={0}
                     value={mealCost}
                     onChange={(e) => setMealCost(Number(e.target.value) || 0)}
-                    className="max-w-[140px] w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                    className="max-w-[140px] tabular-nums w-full px-3 py-2 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] text-sm outline-none focus:border-[#24b486]"
                   />
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#edf2ee] py-[10px]">
-                  <label htmlFor="stayCost">Akomodasi / kamar / malam</label>
+                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
+                  <label htmlFor="stayCost" className="text-[#b2c7be]">
+                    Akomodasi / kamar / malam
+                  </label>
                   <input
                     id="stayCost"
                     type="number"
                     min={0}
                     value={stayCost}
                     onChange={(e) => setStayCost(Number(e.target.value) || 0)}
-                    className="max-w-[140px] w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                    className="max-w-[140px] tabular-nums w-full px-3 py-2 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] text-sm outline-none focus:border-[#24b486]"
                   />
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#edf2ee] py-[10px]">
-                  <span>Estimasi makan</span>
-                  <b>{rupiah(mealTotal)}</b>
+                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
+                  <span className="text-[#b2c7be]">Estimasi makan</span>
+                  <b className="tabular-nums text-[#ecf5f1]">{rupiah(mealTotal)}</b>
                 </div>
-                <div className="flex justify-between gap-3 items-center border-b border-[#edf2ee] py-[10px]">
-                  <span>Estimasi akomodasi (1 kamar)</span>
-                  <b>{rupiah(stayTotal)}</b>
-                </div>
-                <div className="flex justify-between gap-3 items-center py-[10px]">
-                  <span>
-                    <b>Total estimasi</b>
+                <div className="flex justify-between gap-3 items-center border-b border-[#182c25] py-3">
+                  <span className="text-[#b2c7be]">
+                    Estimasi akomodasi (1 kamar)
                   </span>
-                  <span className="text-[25px] font-black text-[#064e3b]">
+                  <b className="tabular-nums text-[#ecf5f1]">{rupiah(stayTotal)}</b>
+                </div>
+                <div className="flex justify-between gap-3 items-center py-4">
+                  <span className="font-semibold text-[#ecf5f1]">
+                    Total estimasi
+                  </span>
+                  <span className="font-display text-[26px] font-semibold text-[#3ad19e] tabular-nums">
                     {rupiah(grandTotal)}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#687b75] bg-[#f2f7f3] px-3 py-[10px] rounded-[10px] m-0">
+                <p className="text-xs text-[#97b0a5] bg-[#091411] border border-[#1a2f28] px-3.5 py-3 rounded-lg m-0 leading-relaxed">
                   Seluruh harga adalah simulasi, bukan penawaran resmi. Biaya
                   transportasi antarkota, tiket aktual, dan pengeluaran pribadi
                   belum termasuk.
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="bg-white border border-[#e1ebe5] rounded-[18px] p-5 card-shadow mt-5">
-            <div className="mb-3">
-              <h3 className="m-0 text-[#064e3b] font-bold text-lg">
+          <div className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow mt-5">
+            <div className="mb-4">
+              <h3 className="m-0 font-display text-[#ecf5f1] font-semibold text-lg">
                 Rekomendasi paket wisata
               </h3>
-              <p className="text-[11px] text-[#687b75] m-0">
-                Rule-based: mencocokkan minat, durasi, dan batas anggaran.
+              <p className="text-xs text-[#97b0a5] mt-1 mb-0">
+                Mencocokkan minat, durasi, dan batas anggaran secara otomatis.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-[10px] my-[18px]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 my-4">
               <select
                 value={interestFilter}
                 onChange={(e) => setInterestFilter(e.target.value)}
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className={inputClass}
               >
                 <option value="">Semua minat</option>
                 <option>alam</option>
@@ -502,7 +545,7 @@ export function PlannerSection({
               <select
                 value={packageDaysFilter}
                 onChange={(e) => setPackageDaysFilter(e.target.value)}
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className={inputClass}
               >
                 <option value="">Durasi apa saja</option>
                 {[1, 2, 3, 4, 5].map((d) => (
@@ -517,75 +560,79 @@ export function PlannerSection({
                 value={budgetFilter}
                 onChange={(e) => setBudgetFilter(e.target.value)}
                 placeholder="Batas anggaran (Rp)"
-                className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                className={inputClass}
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {filteredPackages.length > 0 ? (
                 filteredPackages.map((p) => {
                   const pkgImg = !failedPkgImages[p.id]
                     ? safeUrl(p.imageUrl)
                     : '';
                   return (
-                    <article
+                    <motion.article
                       key={p.id}
-                      className="bg-white border border-[#e1ebe5] rounded-[18px] overflow-hidden card-shadow transition-transform duration-200 hover:-translate-y-[3px]"
+                      whileHover={{ y: -3 }}
+                      transition={{ duration: 0.2 }}
+                      className="bg-[#091411] border border-[#1d352d] hover:border-[#2c5245] rounded-xl overflow-hidden transition-colors flex flex-col"
                     >
-                      <div className="h-[170px] photo-gradient grid place-items-center text-[54px] relative">
+                      <div className="aspect-[4/3] photo-gradient relative overflow-hidden">
                         {pkgImg ? (
                           <img
                             src={pkgImg}
                             alt={p.nama}
+                            referrerPolicy="no-referrer"
                             onError={() =>
                               setFailedPkgImages((prev) => ({
                                 ...prev,
                                 [p.id]: true,
                               }))
                             }
-                            className="absolute inset-0 w-full h-full object-cover"
+                            className="w-full h-full object-cover"
                           />
                         ) : (
-                          <span>🧭</span>
+                          <div className="w-full h-full flex items-center justify-center text-[#7bc9ad]">
+                            <Compass className="w-7 h-7 opacity-80" strokeWidth={1.6} />
+                          </div>
                         )}
-                        <small className="absolute bottom-[10px] left-[12px] z-[2] bg-[#ffffffdf] rounded-full px-[9px] py-[5px] text-[10px] font-extrabold text-[#064e3b]">
-                          Paket wisata
-                        </small>
                       </div>
-                      <div className="p-4">
-                        <span className="inline-flex rounded-full bg-[#e9f5ef] text-[#064e3b] px-[9px] py-1 text-[10px] font-extrabold">
-                          {p.durasi} hari
-                        </span>
-                        <h3 className="mt-2 mb-[5px] text-[18px] font-bold text-[#064e3b]">
+                      <div className="p-5 flex-1 flex flex-col">
+                        <div className="text-xs text-[#3ad19e] font-medium tabular-nums">
+                          Paket wisata · {p.durasi} hari
+                        </div>
+                        <h3 className="mt-1.5 mb-1.5 text-[17px] font-semibold text-[#ecf5f1]">
                           {p.nama}
                         </h3>
-                        <p className="text-[#5c7169] text-[13px] my-[10px]">
+                        <p className="text-[#b2c7be] text-[13px] my-2 flex-1">
                           {p.deskripsi}
                         </p>
-                        <div className="text-[#687b75] text-[12px]">
+                        <div className="text-[#97b0a5] text-xs mb-4">
                           Minat: {p.minat.join(', ')}
                         </div>
-                        <div className="flex justify-between items-center gap-2 mt-[14px]">
-                          <b className="font-[850] text-[#064e3b] text-[13px]">
-                            {rupiah(p.estimasiBiaya)}{' '}
-                            <small className="text-[11px] font-normal text-[#687b75]">
+                        <div className="pt-3.5 border-t border-[#182c25] flex justify-between items-center gap-2">
+                          <div className="tabular-nums">
+                            <b className="font-semibold text-[#ecf5f1] text-sm">
+                              {rupiah(p.estimasiBiaya)}
+                            </b>
+                            <span className="text-[11px] text-[#849f93] ml-1.5">
                               simulasi
-                            </small>
-                          </b>
+                            </span>
+                          </div>
                           <button
                             type="button"
                             onClick={() => handleUsePackage(p)}
-                            className="border-0 rounded-[12px] px-4 py-[11px] bg-[#e8f4ee] text-[#064e3b] font-bold hover:brightness-95 cursor-pointer"
+                            className="border border-[#244237] rounded-lg px-4 py-2 bg-[#142a23] text-[#d9f0e7] text-xs font-semibold hover:bg-[#1b382f] transition-colors cursor-pointer whitespace-nowrap"
                           >
                             Gunakan paket
                           </button>
                         </div>
                       </div>
-                    </article>
+                    </motion.article>
                   );
                 })
               ) : (
-                <div className="col-span-full p-7 text-center text-[#687b75] bg-[#f7faf8] rounded-[14px]">
+                <div className="col-span-full p-8 text-center text-[#97b0a5] bg-[#091411] border border-[#1d352d] rounded-xl">
                   Belum ada paket yang cocok. Coba longgarkan minat, durasi, atau
                   anggaran.
                 </div>

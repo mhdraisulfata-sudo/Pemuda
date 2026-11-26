@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import { FormEvent, useRef, useState } from 'react';
 import { safeUrl } from '../data/seed';
 import type {
@@ -236,18 +237,28 @@ export function DashboardSection({
         ? 'Harga (Rp)'
         : 'Estimasi biaya (Rp)';
 
+  const inputClass =
+    'w-full px-3.5 py-2.5 border border-[#1d352d] rounded-lg bg-[#081310] text-[#ecf5f1] placeholder-[#728c81] text-sm outline-none focus:border-[#24b486] transition-colors';
+  const labelClass = 'text-xs font-medium text-[#97b0a5]';
+
   return (
-    <section id="dashboard" className="py-[58px] no-print">
-      <div className="w-[min(1160px,92%)] mx-auto">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-6">
+    <section id="dashboard" className="py-16 no-print">
+      <div className="w-[min(1200px,92%)] mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-5 mb-7"
+        >
           <div>
-            <div className="text-[#2ab98e] font-extrabold uppercase tracking-[2px] text-[11px]">
-              Demo content management
+            <div className="text-[#3ad19e] font-semibold text-xs tracking-wide">
+              Manajemen Konten Lokal
             </div>
-            <h2 className="text-[clamp(25px,3vw,34px)] leading-[1.1] my-[6px] text-[#064e3b] tracking-[-0.8px] font-bold">
+            <h2 className="font-display text-[clamp(26px,3vw,36px)] leading-[1.15] my-1.5 text-[#ecf5f1] tracking-[-0.015em] font-semibold">
               Dashboard pengelola
             </h2>
-            <p className="text-[#687b75] m-0 max-w-[530px]">
+            <p className="text-[#97b0a5] m-0 max-w-[540px] text-[15px]">
               CRUD lokal untuk data destinasi, kuliner, akomodasi, dan paket
               wisata. Tidak memerlukan akun.
             </p>
@@ -255,23 +266,29 @@ export function DashboardSection({
           <button
             type="button"
             onClick={onResetAll}
-            className="border border-[#e1ebe5] bg-white text-[#064e3b] rounded-[12px] px-4 py-[11px] font-bold hover:brightness-95 cursor-pointer self-start sm:self-auto"
+            className="border border-[#1d352d] bg-[#0f1f1a] text-[#ecf5f1] rounded-lg px-4 py-2 text-xs font-semibold hover:border-[#2c5245] transition-colors cursor-pointer self-start sm:self-auto whitespace-nowrap"
           >
             Reset data contoh
           </button>
-        </div>
+        </motion.div>
 
-        <div className="bg-white border border-[#e1ebe5] rounded-[18px] p-5 card-shadow">
-          <div className="flex gap-[7px] flex-wrap mb-[15px]">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-[#0f1f1a] border border-[#1d352d] rounded-xl p-6 card-shadow"
+        >
+          <div className="inline-flex items-center gap-1 p-1 bg-[#081310] border border-[#1d352d] rounded-lg flex-wrap mb-6">
             {TAB_LABELS.map((tab) => (
               <button
                 key={tab.type}
                 type="button"
                 onClick={() => handleTabChange(tab.type)}
-                className={`border border-[#e1ebe5] rounded-[10px] px-3 py-2 text-[12px] font-bold cursor-pointer ${
+                className={`rounded-md px-3.5 py-1.5 text-xs font-semibold cursor-pointer transition-colors whitespace-nowrap ${
                   adminType === tab.type
-                    ? 'bg-[#064e3b] text-white'
-                    : 'bg-white text-[#064e3b]'
+                    ? 'bg-[#24b486] text-[#041b14]'
+                    : 'bg-transparent text-[#97b0a5] hover:text-[#ecf5f1]'
                 }`}
               >
                 {tab.label}
@@ -279,21 +296,18 @@ export function DashboardSection({
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="mt-0 mb-[14px] text-[#064e3b] font-bold text-lg">
+              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
                 Kelola {TYPE_NAMES[adminType]}
               </h3>
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-3"
               >
-                <div className="sm:col-span-2 grid gap-[5px] content-start">
-                  <label
-                    htmlFor="fName"
-                    className="text-[11px] font-extrabold text-[#687b75]"
-                  >
+                <div className="sm:col-span-2 grid gap-1.5 content-start">
+                  <label htmlFor="fName" className={labelClass}>
                     Nama item
                   </label>
                   <input
@@ -302,23 +316,20 @@ export function DashboardSection({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Nama item"
-                    className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                    className={inputClass}
                   />
                 </div>
 
                 {!isPackages && (
-                  <div className="grid gap-[5px] content-start">
-                    <label
-                      htmlFor="fRegion"
-                      className="text-[11px] font-extrabold text-[#687b75]"
-                    >
+                  <div className="grid gap-1.5 content-start">
+                    <label htmlFor="fRegion" className={labelClass}>
                       Wilayah
                     </label>
                     <select
                       id="fRegion"
                       value={region}
                       onChange={(e) => setRegion(e.target.value)}
-                      className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                      className={inputClass}
                     >
                       {REGIONS.map((r) => (
                         <option key={r}>{r}</option>
@@ -328,18 +339,15 @@ export function DashboardSection({
                 )}
 
                 {!isPackages && !isStays && (
-                  <div className="grid gap-[5px] content-start">
-                    <label
-                      htmlFor="fCategory"
-                      className="text-[11px] font-extrabold text-[#687b75]"
-                    >
+                  <div className="grid gap-1.5 content-start">
+                    <label htmlFor="fCategory" className={labelClass}>
                       Kategori
                     </label>
                     <select
                       id="fCategory"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
-                      className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                      className={inputClass}
                     >
                       {CATEGORIES.map((c) => (
                         <option key={c}>{c}</option>
@@ -349,18 +357,15 @@ export function DashboardSection({
                 )}
 
                 {isPackages && (
-                  <div className="grid gap-[5px] content-start">
-                    <label
-                      htmlFor="fDuration"
-                      className="text-[11px] font-extrabold text-[#687b75]"
-                    >
+                  <div className="grid gap-1.5 content-start">
+                    <label htmlFor="fDuration" className={labelClass}>
                       Durasi paket
                     </label>
                     <select
                       id="fDuration"
                       value={duration}
                       onChange={(e) => setDuration(Number(e.target.value))}
-                      className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                      className={inputClass}
                     >
                       {[1, 2, 3, 4, 5].map((d) => (
                         <option key={d} value={d}>
@@ -371,11 +376,8 @@ export function DashboardSection({
                   </div>
                 )}
 
-                <div className="grid gap-[5px] content-start">
-                  <label
-                    htmlFor="fPrice"
-                    className="text-[11px] font-extrabold text-[#687b75]"
-                  >
+                <div className="grid gap-1.5 content-start">
+                  <label htmlFor="fPrice" className={labelClass}>
                     {priceLabel}
                   </label>
                   <input
@@ -385,16 +387,13 @@ export function DashboardSection({
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     placeholder={priceLabel}
-                    className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                    className={inputClass}
                   />
                 </div>
 
                 {isFoods && (
-                  <div className="grid gap-[5px] content-start">
-                    <label
-                      htmlFor="fExtra"
-                      className="text-[11px] font-extrabold text-[#687b75]"
-                    >
+                  <div className="grid gap-1.5 content-start">
+                    <label htmlFor="fExtra" className={labelClass}>
                       Status sertifikasi halal
                     </label>
                     <select
@@ -408,7 +407,7 @@ export function DashboardSection({
                             | 'Tidak diketahui'
                         )
                       }
-                      className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                      className={inputClass}
                     >
                       <option>Belum diverifikasi</option>
                       <option>Terverifikasi</option>
@@ -417,11 +416,8 @@ export function DashboardSection({
                   </div>
                 )}
 
-                <div className="sm:col-span-2 grid gap-[5px] content-start">
-                  <label
-                    htmlFor="fDesc"
-                    className="text-[11px] font-extrabold text-[#687b75]"
-                  >
+                <div className="sm:col-span-2 grid gap-1.5 content-start">
+                  <label htmlFor="fDesc" className={labelClass}>
                     Deskripsi
                   </label>
                   <textarea
@@ -430,15 +426,12 @@ export function DashboardSection({
                     value={desc}
                     onChange={(e) => setDesc(e.target.value)}
                     placeholder="Deskripsi singkat"
-                    className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                    className={inputClass}
                   />
                 </div>
 
-                <div className="sm:col-span-2 grid gap-[5px] content-start">
-                  <label
-                    htmlFor="fImage"
-                    className="text-[11px] font-extrabold text-[#687b75]"
-                  >
+                <div className="sm:col-span-2 grid gap-1.5 content-start">
+                  <label htmlFor="fImage" className={labelClass}>
                     URL gambar (opsional, http/https)
                   </label>
                   <input
@@ -447,17 +440,14 @@ export function DashboardSection({
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
                     placeholder="https://contoh.co.id/gambar.jpg"
-                    className="w-full px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                    className={inputClass}
                   />
                 </div>
 
                 {isPackages && (
-                  <div className="sm:col-span-2 grid gap-[9px] border border-dashed border-[#e1ebe5] p-3 rounded-[12px]">
-                    <div className="grid gap-[5px] content-start">
-                      <label
-                        htmlFor="fPackageDestinations"
-                        className="text-[11px] font-extrabold text-[#687b75]"
-                      >
+                  <div className="sm:col-span-2 grid gap-2.5 border border-dashed border-[#1d352d] p-3.5 rounded-xl">
+                    <div className="grid gap-1.5 content-start">
+                      <label htmlFor="fPackageDestinations" className={labelClass}>
                         Destinasi dalam paket (pilih minimal satu)
                       </label>
                       <select
@@ -471,7 +461,7 @@ export function DashboardSection({
                             )
                           )
                         }
-                        className="w-full min-h-[104px] px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                        className={`${inputClass} min-h-[104px]`}
                       >
                         {db.destinations.map((d) => (
                           <option key={d.id} value={d.id}>
@@ -480,11 +470,8 @@ export function DashboardSection({
                         ))}
                       </select>
                     </div>
-                    <div className="grid gap-[5px] content-start">
-                      <label
-                        htmlFor="fPackageInterests"
-                        className="text-[11px] font-extrabold text-[#687b75]"
-                      >
+                    <div className="grid gap-1.5 content-start">
+                      <label htmlFor="fPackageInterests" className={labelClass}>
                         Minat paket (pilih minimal satu)
                       </label>
                       <select
@@ -498,7 +485,7 @@ export function DashboardSection({
                             )
                           )
                         }
-                        className="w-full min-h-[104px] px-3 py-[11px] border border-[#dce8e1] rounded-[11px] bg-white text-[#17352e] outline-none"
+                        className={`${inputClass} min-h-[104px]`}
                       >
                         {INTERESTS.map((i) => (
                           <option key={i}>{i}</option>
@@ -508,23 +495,24 @@ export function DashboardSection({
                   </div>
                 )}
 
-                <button
+                <motion.button
                   type="submit"
-                  className="sm:col-span-2 border-0 rounded-[12px] px-4 py-[11px] bg-[#2ab98e] text-white font-bold btn-primary-shadow hover:brightness-95 cursor-pointer"
+                  whileTap={{ scale: 0.98 }}
+                  className="sm:col-span-2 border-0 rounded-lg px-4 py-2.5 bg-[#24b486] text-[#041b14] text-xs font-semibold btn-primary-shadow hover:bg-[#2ec493] transition-colors cursor-pointer"
                 >
                   {editId ? 'Simpan perubahan' : 'Tambah data'}
-                </button>
+                </motion.button>
               </form>
-              <p className="text-[11px] text-[#687b75] mt-2">
+              <p className="text-xs text-[#849f93] mt-2.5">
                 Form menyesuaikan jenis data. Data disimpan di browser ini saja.
               </p>
             </div>
 
             <div>
-              <h3 className="mt-0 mb-[14px] text-[#064e3b] font-bold text-lg">
+              <h3 className="mt-0 mb-4 font-display text-[#ecf5f1] font-semibold text-lg">
                 Data tersimpan
               </h3>
-              <div className="max-h-[340px] overflow-auto">
+              <div className="max-h-[380px] overflow-auto pr-1">
                 {db[adminType].length > 0 ? (
                   db[adminType].map((x) => {
                     const sub =
@@ -534,25 +522,26 @@ export function DashboardSection({
                     return (
                       <div
                         key={x.id}
-                        className="flex justify-between gap-[10px] py-[10px] border-b border-[#e1ebe5] text-[13px]"
+                        className="flex justify-between gap-2.5 py-3 border-b border-[#182c25] text-[13px] items-center"
                       >
-                        <span>
-                          <b>{x.nama}</b>
-                          <br />
-                          <small className="text-[#687b75]">{sub}</small>
+                        <span className="min-w-0">
+                          <b className="text-[#ecf5f1] font-medium block truncate">
+                            {x.nama}
+                          </b>
+                          <small className="text-[#97b0a5] text-xs">{sub}</small>
                         </span>
-                        <span className="whitespace-nowrap flex gap-1 items-center">
+                        <span className="whitespace-nowrap flex gap-1.5 items-center shrink-0">
                           <button
                             type="button"
                             onClick={() => handleEdit(x.id)}
-                            className="border border-[#e1ebe5] bg-white rounded-[10px] px-[10px] py-2 text-[#064e3b] cursor-pointer"
+                            className="border border-[#1d352d] bg-[#091411] hover:border-[#2c5245] rounded-lg px-3 py-1.5 text-xs font-medium text-[#ecf5f1] cursor-pointer transition-colors"
                           >
                             Edit
                           </button>
                           <button
                             type="button"
                             onClick={() => onDeleteItem(adminType, x.id)}
-                            className="border border-[#e1ebe5] bg-white rounded-[10px] px-[10px] py-2 text-[#064e3b] cursor-pointer"
+                            className="border border-[#1d352d] bg-[#091411] hover:border-[#52272c] hover:text-[#f28b94] rounded-lg px-3 py-1.5 text-xs font-medium text-[#97b0a5] cursor-pointer transition-colors"
                           >
                             Hapus
                           </button>
@@ -561,14 +550,14 @@ export function DashboardSection({
                     );
                   })
                 ) : (
-                  <div className="p-7 text-center text-[#687b75] bg-[#f7faf8] rounded-[14px]">
+                  <div className="p-8 text-center text-[#97b0a5] bg-[#091411] border border-[#1d352d] rounded-xl">
                     Belum ada data.
                   </div>
                 )}
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
