@@ -3,6 +3,7 @@ import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DashboardSection } from './components/DashboardSection';
 import { DetailModal, type ModalState } from './components/DetailModal';
+import { HeroDestinationSlideshow } from './components/HeroDestinationSlideshow';
 import { ItemCard } from './components/ItemCard';
 import { PlannerSection } from './components/PlannerSection';
 import {
@@ -80,7 +81,6 @@ export default function App() {
   const [selectedPreview, setSelectedPreview] =
     useState<SelectedPreviewItem | null>(null);
   const [panelMode, setPanelMode] = useState<'map' | 'detail'>('map');
-  const [heroImgFailed, setHeroImgFailed] = useState(false);
 
   const [toastMsg, setToastMsg] = useState('');
   const toastTimerRef = useRef<number | null>(null);
@@ -475,33 +475,17 @@ export default function App() {
                 </div>
               </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.45, delay: 0.08, ease: EASE_OUT }}
-                className="relative rounded-xl overflow-hidden aspect-[16/9] lg:aspect-[16/8] border border-[#1d352d] photo-gradient card-shadow"
-              >
-                {!heroImgFailed && (
-                  <img
-                    src={HERO_IMAGE}
-                    alt={t.heroCaptionTitle}
-                    referrerPolicy="no-referrer"
-                    onError={() => setHeroImgFailed(true)}
-                    className="w-full h-full object-cover block"
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-                <div className="absolute bottom-0 inset-x-0 px-4 py-3 text-white flex items-end justify-between gap-3">
-                  <div>
-                    <div className="font-display text-base font-semibold">
-                      {t.heroCaptionTitle}
-                    </div>
-                    <div className="text-[11px] text-white/80">
-                      {t.heroCaptionSub}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              <HeroDestinationSlideshow
+                destinations={db.destinations}
+                fallbackImage={HERO_IMAGE}
+                onSelectDestination={(dest) => {
+                  setActiveTab('destinations');
+                  handleShowDetail('destinations', dest.id);
+                  document
+                    .getElementById('explorer')
+                    ?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              />
             </div>
           </section>
 
