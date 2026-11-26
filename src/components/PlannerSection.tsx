@@ -228,7 +228,7 @@ export function PlannerSection({
         id="planner"
         className="bg-[#0b1814] border-y border-[#152822] py-16 no-print"
       >
-        <div className="w-[min(1200px,92%)] mx-auto">
+        <div className="w-[min(1360px,94%)] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
